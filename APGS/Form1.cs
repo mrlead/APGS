@@ -26,14 +26,55 @@ namespace APGS
             render.Image = picture;
         }
 
-        void line(int x0, int y0, int x1, int y1, Bitmap image, Color color)
+
+        //Отрисовка линии алгоритмом Брезенхэма
+        public void line(int x0, int y0, int x1, int y1, Bitmap image, Color color)
         {
-            for (int x = x0; x < x1; x++)
+            try
             {
-                float t = (x - x0) / (float)(x1 - x0);
-                int y = y0 * (1 - (int)t) + y1 * (int)t;
-                image.SetPixel(x, y, color);
+                bool steep = false;
+                if (Math.Abs(x0 - x1) < Math.Abs(y0 - y1))
+                {
+                    Swap(ref x0, ref y0);
+                    Swap(ref x1, ref y1);
+                    steep = true;
+                }
+                if (x0 > x1)
+                {
+                    Swap(ref x0, ref x1);
+                    Swap(ref y0, ref y1);
+                }
+                int dx = x1 - x0;
+                int dy = y1 - y0;
+                int derror = Math.Abs(dy) * 2;
+                int error = 0;
+                int y = y0;
+                for (int x = x0; x <= x1; x++)
+                {
+                    if (steep)
+                        image.SetPixel(y, x, color);
+                    else
+                        image.SetPixel(x, y, color);
+                    error += derror;
+
+                    if (error > dx)
+                    {
+                        y += (y1 > y0 ? 1 : -1);
+                        error -= dx * 2;
+                    }
+                }
             }
+            catch (Exception)
+            {
+                MessageBox.Show("Произошла ошибка во время отрисовки!");
+            }
+        }
+
+        private void Swap(ref int x0, ref int y0)
+        {
+            int c = x0;
+            x0 = y0;
+            y0 = c;
         }
     }
 }
