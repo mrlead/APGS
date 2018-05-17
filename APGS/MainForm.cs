@@ -4,9 +4,9 @@ using System.Windows.Forms;
 
 namespace APGS
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
         }
@@ -20,9 +20,10 @@ namespace APGS
             Bitmap picture = new Bitmap(render.Width, render.Height);
             Graphics graphics = Graphics.FromImage(picture);
             graphics.Clear(black);
-            line(13, 20, 80, 40, picture, white);
+            //line(13, 20, 80, 40, picture, white);
             line(20, 13, 40, 80, picture, red);
             line(80, 40, 13, 20, picture, red);
+            picture.RotateFlip(RotateFlipType.RotateNoneFlipY);
             render.Image = picture;
         }
 
