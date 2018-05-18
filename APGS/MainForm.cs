@@ -1,11 +1,17 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using ObjParser;
 
 namespace APGS
 {
     public partial class MainForm : Form
     {
+        //Константы цвета, знаю, что можно напрямую, но мне так удобно)
+        Color red = Color.Red;
+        Color white = Color.White;
+        Color black = Color.Black;
+
         public MainForm()
         {
             InitializeComponent();
@@ -13,17 +19,24 @@ namespace APGS
 
         private void start_render_Click(object sender, EventArgs e)
         {
-            Color red = Color.Red;
-            Color white = Color.White;
-            Color black = Color.Black;
-
             Bitmap picture = new Bitmap(render.Width, render.Height);
             Graphics graphics = Graphics.FromImage(picture);
             graphics.Clear(black);
-            //line(13, 20, 80, 40, picture, white);
-            line(20, 13, 40, 80, picture, red);
-            line(80, 40, 13, 20, picture, red);
             picture.RotateFlip(RotateFlipType.RotateNoneFlipY);
+            Obj obj = new Obj();
+            obj.LoadObj("../../test_model/1_obj.obj");
+            for(int i = 0; i < obj.FaceList.Count; i++)
+            {
+                int[] face = obj.FaceList[i].VertexIndexList;
+                for (int j = 0; j < 3; j++)
+                {
+                    int x0 = (int)(obj.VertexList[face[j]].X + 1.0) * 3;
+                    int y0 = (int)(obj.VertexList[face[j]].Y + 1.0) * 3;
+                    int x1 = (int)(obj.VertexList[face[(j + 1) % 3]].X + 1.0) * 3;
+                    int y1 = (int)(obj.VertexList[face[(j + 1) % 3]].Y + 1.0) * 3;
+                    line(x0 + 100, y0 + 100, x1 + 100, y1 + 100, picture, white);
+                }
+            }
             render.Image = picture;
         }
 
@@ -67,8 +80,9 @@ namespace APGS
             }
             catch (Exception)
             {
-                MessageBox.Show("Произошла ошибка во время отрисовки!");
+                //ErrorLabel.Text = "Произошла ошибка во время отрисовки!";
             }
+
         }
 
         private void Swap(ref int x0, ref int y0)

@@ -80,6 +80,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="test_model\african_head.obj" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
