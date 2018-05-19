@@ -46,6 +46,27 @@ namespace ObjParser.Types
             Z = z;
         }
 
+        public static Vertex operator -(Vertex c1, Vertex c2)
+        {
+            return new Vertex { X = c1.X - c2.X, Y = c1.Y - c2.Y, Z = c1.Z - c2.Z };
+        }
+
+        public static Vertex operator *(Vertex c1, Vertex c2)
+        {
+            return new Vertex { X = c1.X * c2.X, Y = c1.Y * c2.Y, Z = c1.Z * c2.Z };
+        }
+
+
+        public static Vertex operator *(Vertex c1, double c2)
+        {
+            return new Vertex { X = c1.X * c2, Y = c1.Y * c2, Z = c1.Z * c2 };
+        }
+
+        public static Vertex operator +(Vertex c1, Vertex c2)
+        {
+            return new Vertex { X = c1.X + c2.X, Y = c1.Y + c2.Y, Z = c1.Z + c2.Z };
+        }
+
         public override string ToString()
         {
             return string.Format("v {0} {1} {2}", X, Y, Z);
