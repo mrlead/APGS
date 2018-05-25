@@ -17,7 +17,7 @@ namespace APGS
         int width_picture = picture.Width;
         int height_picture = picture.Height;
         Graphics graphics = Graphics.FromImage(picture);
-        int[] z_buff;
+        static int[] z_buff;
 
         public MainForm()
         {
@@ -27,36 +27,18 @@ namespace APGS
         private void start_render_Click(object sender, EventArgs e)
         {
             //z-buffer
-            z_buff = new int[width_picture * height_picture];
-            for(int i = 0; i < width_picture * height_picture; i++)
-            {
-                z_buff[i] = Numeric_clone<int>.MinValue;
-            }
+            z_buff = new int[render.Width * render.Height];
+            for(int i = 0; i < render.Width * render.Height; i++)
+            z_buff[i] = Numeric_clone<int>.MinValue;
 
             create_model();
-           /* var obj = new Obj();
-            obj.LoadObj("../../test_model/african_head.obj");
-            for(int k = 0; k < obj.FaceList.Count; k++)
-            {
-                int[] face = obj.FaceList[k].VertexIndexList;
-                for(int j = 0; j < 3; j++)
-                {
-                    int x0 = (int)(obj.VertexList[face[j]].X + 1) * width_picture / 2;
-                    int y0 = (int)(obj.VertexList[face[j]].Y + 1) * height_picture / 2;
-                    int x1 = (int)(obj.VertexList[face[(j + 1) % 3]].X + 1) * width_picture / 2;
-                    int y1 = (int)(obj.VertexList[face[(j + 1) % 3]].Y + 1) * height_picture / 2;
-                    line(x0, y0, x1, y1, picture, red);
-                }
-            }
-            render.Image = picture;
-            picture.RotateFlip(RotateFlipType.RotateNoneFlipY);*/
         }
 
         //создание модели проволка/полная
         public void create_model()
         {
             var obj = new Obj();
-            obj.LoadObj("../../test_model/4.obj");
+            obj.LoadObj("../../test_model/18.obj");
 
             if(wire_but.Checked)
             {
@@ -67,7 +49,7 @@ namespace APGS
                     int[] face = obj.FaceList[k].VertexIndexList;
                     for (int j = 0; j < 3; j++)
                     {
-                        line((int)(obj.VertexList[face[j]].X) + 400, (int)(obj.VertexList[face[j]].Y) + 400, (int)(obj.VertexList[face[(j + 1) % 3]].X) + 400, (int)(obj.VertexList[face[(j + 1) % 3]].Y) + 400, picture, red); 
+                        line((int)(obj.VertexList[face[j]].X), (int)(obj.VertexList[face[j]].Y), (int)(obj.VertexList[face[(j + 1) % 3]].X), (int)(obj.VertexList[face[(j + 1) % 3]].Y), picture, red); 
                     }
                 }
                 render.Image = picture;
@@ -89,38 +71,66 @@ namespace APGS
         }
 
         //Отрисовка треуольников + растеризация
-        public void triangle(Vertex t0, Vertex t1, Vertex t2, Bitmap bitmap, System.Drawing.Color color, int z_buff)
+        public void triangle(Vertex t0, Vertex t1, Vertex t2, Bitmap bitmap, System.Drawing.Color color)
         {
-            if (t0.Y == t1.Y && t0.Y == t2.Y) return;
-            if (t0.Y > t1.Y) Swap(ref t0, ref t1);
-            if (t0.Y > t2.Y) Swap(ref t0, ref t2);
-            if (t1.Y > t2.Y) Swap(ref t1, ref t2);
+            t0.X += 0;
+            t0.Y += 0;
+            t0.Z += 0;
+            t1.X += 0;
+            t1.Y += 0;
+            t1.Z += 0;
+            t2.X += 0;
+            t2.Y += 0;
+            t2.Z += 0;
 
-            int total_height = (int)(t2.Y - t0.Y);
-
-            for (int i = 0; i < total_height; i++)
+            try
             {
-                bool second_half = i > t1.Y - t0.Y || t1.Y == t0.Y;
-                int segment_height = (int)(second_half ? t2.Y - t1.Y : t1.Y - t0.Y);
-                float alpha = (float)(i / total_height);
-                float beta = (float)(i - (second_half ? t1.Y - t0.Y : 0)) / segment_height;
-                Vertex A = t0 + (t2 - t0) * alpha;
-                Vertex B = second_half ? t1 + (t2 - t1) * beta : t0 + (t1 - t0) * beta;
-                if (A.X > B.X) Swap(ref A, ref B);
-                for (int j = (int)(A.X); j <= B.X; j++)
+                if (t0.Y == t1.Y && t0.Y == t2.Y) return;
+                if (t0.Y > t1.Y)
+                    Swap(ref t0, ref t1);
+                if (t0.Y > t2.Y)
+                    Swap(ref t0, ref t2);
+                if (t1.Y > t2.Y)
+                    Swap(ref t1, ref t2);
+                double total_height = t2.Y - t0.Y;
+                for (int i = 0; i < total_height; i++)
                 {
-                    float ph = B.X == A.X ? 1 : (float)(j - A.X) / (float)(B.X - A.X);
-                    Vertex C = A + (B - A) * ph;
-                    int idx = (int)(C.X + C.Y) * width_picture;
-                    if(z_buff[idx] < C.Z)
+                    bool sec_h = i > t1.Y - t0.Y || t1.Y == t0.Y;
+                    double seg_h = sec_h ? t2.Y - t1.Y : t1.Y - t0.Y;
+                    double alpha = (double)i / total_height;
+
+                    double beta = (double)(i - (sec_h ? t1.Y - t0.Y : 0)) / seg_h;
+
+                    Vertex A = t0 + (t2 - t0) * alpha;
+
+                    Vertex B = sec_h ? t1 + (t2 - t1) * beta : t0 + (t1 - t0) * beta;
+
+                    if (A.X > B.X)
                     {
-                        z_buff[idx] = (int)C.Z;
-                        bitmap.SetPixel((int)C.X, (int)C.Y, color);
+                        Swap(ref A, ref B);
                     }
-                   /* if (j < 0 || (int)(t0.Y + i) < 0)
-                        break;
-                    bitmap.SetPixel(j, (int)(t0.Y + i), color);*/
+                    for (double j = A.X; j <= B.X; j++)
+                    {
+                        double phi = B.X == A.X ? 1 : (double)(j - A.X) / (double)(B.X - A.X);
+                        Vertex C = new Vertex();
+
+                        C = A + (B - A) * phi;
+
+                        int idx = (int)((int)C.X + (int)C.Y * render.Width);
+
+                        if ((int)C.X >= render.Width || (int)C.Y >= render.Height || (int)C.X < 0) continue;
+                        if (z_buff[idx] < (int)C.Z)
+                        {
+                            z_buff[idx] = (int)C.Z;
+                            bitmap.SetPixel((int)C.X, (int)C.Y, color);
+
+                        }
+                    }
                 }
+            }
+            catch (Exception)
+            {
+                alarma_lbl.Text = "Возникла проблема при отрисовке модели";
             }
         }
 
@@ -167,7 +177,7 @@ namespace APGS
             }
             catch (Exception)
             {
-                //MessageBox.Show("Произошла ошибка во время отрисовки!");
+                alarma_lbl.Text = "Возникла проблема при отрисовке модели";
             }
 
         }

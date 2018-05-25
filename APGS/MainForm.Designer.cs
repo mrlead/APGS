@@ -33,6 +33,7 @@
             this.start_render = new System.Windows.Forms.Button();
             this.wire_but = new System.Windows.Forms.RadioButton();
             this.raster_but = new System.Windows.Forms.RadioButton();
+            this.alarma_lbl = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.render)).BeginInit();
             this.SuspendLayout();
             // 
@@ -86,11 +87,20 @@
             this.raster_but.Text = "Закрашенная модель";
             this.raster_but.UseVisualStyleBackColor = true;
             // 
+            // alarma_lbl
+            // 
+            this.alarma_lbl.AutoSize = true;
+            this.alarma_lbl.Location = new System.Drawing.Point(12, 590);
+            this.alarma_lbl.Name = "alarma_lbl";
+            this.alarma_lbl.Size = new System.Drawing.Size(0, 13);
+            this.alarma_lbl.TabIndex = 5;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(992, 620);
+            this.Controls.Add(this.alarma_lbl);
             this.Controls.Add(this.raster_but);
             this.Controls.Add(this.wire_but);
             this.Controls.Add(this.start_render);
@@ -111,6 +121,7 @@
         private System.Windows.Forms.Button start_render;
         private System.Windows.Forms.RadioButton wire_but;
         private System.Windows.Forms.RadioButton raster_but;
+        private System.Windows.Forms.Label alarma_lbl;
     }
 }
 

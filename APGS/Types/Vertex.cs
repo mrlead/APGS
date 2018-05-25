@@ -71,5 +71,80 @@ namespace ObjParser.Types
         {
             return string.Format("v {0} {1} {2}", X, Y, Z);
         }
+
+        public static Vertex difference_vertex(Vertex a, Vertex b)
+        {
+            Vertex A = new Vertex();
+            A.X = a.X - b.X;
+            A.Y = a.Y - b.Y;
+            A.Z = a.Z - b.Z;
+            return A;
+        }
+
+        public static Vertex summa_vertex(Vertex a, Vertex b)
+        {
+            Vertex A = new Vertex();
+            A.X = a.X + b.X;
+            A.Y = a.Y + b.Y;
+            A.Z = a.Z + b.Z;
+            return A;
+        }
+
+        public static Vertex multiplication_vertex(Vertex a, Vertex b)
+        {
+            Vertex A = new Vertex();
+            A.X = a.X * b.X;
+            A.Y = a.Y * b.Y;
+            A.Z = a.Z * b.Z;
+            return A;
+        }
+
+        public static Vertex multiplication_vertex(Vertex a, double b)
+        {
+            Vertex A = new Vertex();
+            A.X = a.X * b;
+            A.Y = a.Y * b;
+            A.Z = a.Z * b;
+            return A;
+        }
+
+        public static Vertex cross_vertex(Vertex a, Vertex b)
+        {
+            Vertex A = new Vertex();
+            //  A.X = a.Y * b.Z - a.Z * b.Y;
+            // A.Y = a.Z * b.X - a.X * b.Z;
+            //  A.Z = a.X * b.Y - a.Y * b.X;
+
+            A.X = a.Y * b.Z - a.Z * b.Y;
+            A.Y = a.Z * b.X - a.X * b.Z;
+            A.Z = a.X * b.Y - a.Y * b.X;
+
+            return A;
+        }
+
+
+        public static double norm(Vertex a)
+        {
+            return Math.Sqrt(a.X * a.X + a.Y * a.Y + a.Z * a.Z);
+        }
+
+        public static Vertex normalize(Vertex a)
+        {
+            Vertex A = new Vertex();
+
+            if (a.X == 0 && a.Y == 0 && a.Z == 0)
+            {
+                A.X = 0;
+                A.Y = 0;
+                A.Z = 0;
+            }
+            else
+            {
+                A.X = a.X * (1 / norm(a));
+                A.Y = a.Y * (1 / norm(a));
+                A.Z = a.Z * (1 / norm(a));
+            }
+            return A;
+        }
     }
 }
