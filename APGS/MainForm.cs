@@ -24,13 +24,20 @@ namespace APGS
             InitializeComponent();
         }
 
+        //z-buffer
+        private void z_buffer_func()
+        {
+            z_buff = new int[render.Width * render.Height];
+            for (int i = 0; i < render.Width * render.Height; i++)
+            {
+                z_buff[i] = Numeric_clone<int>.MinValue;
+            }
+        }
+
         private void start_render_Click(object sender, EventArgs e)
         {
-            //z-buffer
-            z_buff = new int[render.Width * render.Height];
-            for(int i = 0; i < render.Width * render.Height; i++)
-            z_buff[i] = Numeric_clone<int>.MinValue;
-
+            z_buffer_func();
+            graphics.Clear(black);
             create_model();
         }
 
@@ -38,18 +45,17 @@ namespace APGS
         public void create_model()
         {
             var obj = new Obj();
-            obj.LoadObj("../../test_model/18.obj");
+            obj.LoadObj("../../test_model/20.obj");
 
             if(wire_but.Checked)
             {
                 //проволочный рендер
-                graphics.Clear(black);
                 for (int k = 0; k < obj.FaceList.Count; k++)
                 {
                     int[] face = obj.FaceList[k].VertexIndexList;
                     for (int j = 0; j < 3; j++)
                     {
-                        line((int)(obj.VertexList[face[j]].X), (int)(obj.VertexList[face[j]].Y), (int)(obj.VertexList[face[(j + 1) % 3]].X), (int)(obj.VertexList[face[(j + 1) % 3]].Y), picture, red); 
+                        line((int)(obj.VertexList[face[j]].X + 100), (int)(obj.VertexList[face[j]].Y + 500), (int)(obj.VertexList[face[(j + 1) % 3]].X + 100), (int)(obj.VertexList[face[(j + 1) % 3]].Y + 500), picture, red); 
                     }
                 }
                 render.Image = picture;
@@ -58,13 +64,29 @@ namespace APGS
             else
             {
                 //закрашенный рендер
-                graphics.Clear(black);
+
+                //сдвиг модели на центр сцены
+                for (int i = 0; i < obj.VertexList.Count; i++)
+                {
+                    Vertex t0 = obj.VertexList[i];
+
+                    t0.X += 400;
+                    t0.Y += 400;
+                    t0.Z += 400;
+                }
+
                 for (int i = 0; i < obj.FaceList.Count; i++)
                 {
                     int[] face = obj.FaceList[i].VertexIndexList;
-                    Vertex[] screen_coords = new Vertex[3];
+                    Vertex[] world_coords = new Vertex[3];
+                    for (int j = 0; j < 3; j++)
+                    {
+                        Vertex v = obj.VertexList[face[j]];
+                        world_coords[j] = v;
+                    }
                     triangle(obj.VertexList[face[0]], obj.VertexList[face[1]], obj.VertexList[face[2]], picture, red);
                 }
+
                 render.Image = picture;
                 picture.RotateFlip(RotateFlipType.RotateNoneFlipY);
             }
@@ -72,19 +94,9 @@ namespace APGS
 
         //Отрисовка треуольников + растеризация
         public void triangle(Vertex t0, Vertex t1, Vertex t2, Bitmap bitmap, System.Drawing.Color color)
-        {
-            t0.X += 0;
-            t0.Y += 0;
-            t0.Z += 0;
-            t1.X += 0;
-            t1.Y += 0;
-            t1.Z += 0;
-            t2.X += 0;
-            t2.Y += 0;
-            t2.Z += 0;
-
+        { 
             try
-            {
+            { 
                 if (t0.Y == t1.Y && t0.Y == t2.Y) return;
                 if (t0.Y > t1.Y)
                     Swap(ref t0, ref t1);
@@ -182,6 +194,7 @@ namespace APGS
 
         }
 
+        //Функция обмена данными координат
         static void Swap<T>(ref T x, ref T y)
         {
             T c = x;
