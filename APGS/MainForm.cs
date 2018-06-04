@@ -224,13 +224,16 @@ namespace APGS
         //сохранение сцены
         private void button2_Click(object sender, EventArgs e)
         {
-
+            //потом...
         }
 
         //удаление сцены
         private void button3_Click(object sender, EventArgs e)
         {
-
+            render.Height = 0;
+            render.Width = 0;
+            render.BackColor = white;
+            z_buff = null;
         }
     }
 }

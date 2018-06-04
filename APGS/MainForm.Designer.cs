@@ -45,7 +45,7 @@
             // 
             this.render.Location = new System.Drawing.Point(12, 12);
             this.render.Name = "render";
-            this.render.Size = new System.Drawing.Size(968, 441);
+            this.render.Size = new System.Drawing.Size(1000, 500);
             this.render.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.render.TabIndex = 0;
             this.render.TabStop = false;
@@ -60,7 +60,7 @@
             // 
             // start_render
             // 
-            this.start_render.Location = new System.Drawing.Point(472, 585);
+            this.start_render.Location = new System.Drawing.Point(474, 605);
             this.start_render.Name = "start_render";
             this.start_render.Size = new System.Drawing.Size(75, 23);
             this.start_render.TabIndex = 2;
@@ -72,7 +72,7 @@
             // 
             this.wire_but.AutoSize = true;
             this.wire_but.Checked = true;
-            this.wire_but.Location = new System.Drawing.Point(592, 568);
+            this.wire_but.Location = new System.Drawing.Point(592, 580);
             this.wire_but.Name = "wire_but";
             this.wire_but.Size = new System.Drawing.Size(133, 17);
             this.wire_but.TabIndex = 3;
@@ -83,7 +83,7 @@
             // raster_but
             // 
             this.raster_but.AutoSize = true;
-            this.raster_but.Location = new System.Drawing.Point(592, 592);
+            this.raster_but.Location = new System.Drawing.Point(592, 605);
             this.raster_but.Name = "raster_but";
             this.raster_but.Size = new System.Drawing.Size(135, 17);
             this.raster_but.TabIndex = 4;
@@ -101,7 +101,7 @@
             // 
             // scale_val
             // 
-            this.scale_val.Location = new System.Drawing.Point(748, 590);
+            this.scale_val.Location = new System.Drawing.Point(747, 602);
             this.scale_val.Name = "scale_val";
             this.scale_val.Size = new System.Drawing.Size(31, 20);
             this.scale_val.TabIndex = 6;
@@ -109,7 +109,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(12, 461);
+            this.button1.Location = new System.Drawing.Point(12, 548);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(110, 23);
             this.button1.TabIndex = 7;
@@ -119,7 +119,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(12, 490);
+            this.button2.Location = new System.Drawing.Point(12, 577);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(110, 23);
             this.button2.TabIndex = 8;
@@ -129,7 +129,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(12, 520);
+            this.button3.Location = new System.Drawing.Point(12, 606);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(110, 23);
             this.button3.TabIndex = 9;
@@ -141,7 +141,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(992, 620);
+            this.ClientSize = new System.Drawing.Size(1025, 640);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);

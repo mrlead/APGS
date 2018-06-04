@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.width_val = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.height_val = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.width_val = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
@@ -48,12 +48,13 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Высота сцены";
             // 
-            // width_val
+            // height_val
             // 
-            this.width_val.Location = new System.Drawing.Point(100, 13);
-            this.width_val.Name = "width_val";
-            this.width_val.Size = new System.Drawing.Size(58, 20);
-            this.width_val.TabIndex = 1;
+            this.height_val.Location = new System.Drawing.Point(100, 13);
+            this.height_val.Name = "height_val";
+            this.height_val.Size = new System.Drawing.Size(58, 20);
+            this.height_val.TabIndex = 1;
+            this.height_val.Text = "500";
             // 
             // label2
             // 
@@ -64,12 +65,13 @@
             this.label2.TabIndex = 2;
             this.label2.Text = "Ширина сцены";
             // 
-            // height_val
+            // width_val
             // 
-            this.height_val.Location = new System.Drawing.Point(100, 48);
-            this.height_val.Name = "height_val";
-            this.height_val.Size = new System.Drawing.Size(58, 20);
-            this.height_val.TabIndex = 3;
+            this.width_val.Location = new System.Drawing.Point(100, 48);
+            this.width_val.Name = "width_val";
+            this.width_val.Size = new System.Drawing.Size(58, 20);
+            this.width_val.TabIndex = 3;
+            this.width_val.Text = "1000";
             // 
             // label3
             // 
@@ -118,9 +120,9 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.height_val);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.width_val);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.height_val);
             this.Controls.Add(this.label1);
             this.Name = "SceneBuilder";
             this.Text = "Создание формы";
@@ -132,9 +134,9 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox width_val;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox height_val;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox width_val;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button button1;

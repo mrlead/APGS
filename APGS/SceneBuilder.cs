@@ -31,8 +31,8 @@ namespace APGS
         {
             try
             {
+                height = Convert.ToInt32(height_val.Text);
                 width = Convert.ToInt32(width_val.Text);
-                height = Convert.ToInt32(width_val.Text);
                 if (width >= 500 && width <= 1000 && height >= 500 && height <= 1000)
                 {
                     if (color != null)
