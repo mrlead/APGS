@@ -1,43 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace APGS
 {
     public partial class SceneBuilder : Form
     {
+        public Color color;
+        public int width, height;
 
-        MainForm main;
+        MainForm form;
 
-        public SceneBuilder()
+        public SceneBuilder(MainForm form)
         {
             InitializeComponent();
-        }
-
-        //создание сцены
-        public SceneBuilder(int width, int height, Color color)
-        {
-           /* main.GetPictureBox().Width = width;
-            main.GetPictureBox().Height = height;
-            main.GetPictureBox().BackColor = color;*/
-        }
-
-        //сохранение сцены
-        public void saveScene()
-        {
-
-        }
-
-        //удаление сцены
-        public void deleteScene()
-        {
-
+            this.form = form;
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -45,6 +22,37 @@ namespace APGS
             if (colorDialog1.ShowDialog() == DialogResult.OK)
             {
                 button2.BackColor = colorDialog1.Color;
+                color = colorDialog1.Color;
+            }
+        }
+
+        //создание сцены
+        private void button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                width = Convert.ToInt32(width_val.Text);
+                height = Convert.ToInt32(width_val.Text);
+                if (width >= 500 && width <= 1000 && height >= 500 && height <= 1000)
+                {
+                    if (color != null)
+                    {
+                        color = Color.Black;
+                        form.scene_managment(width, height, color);
+                        Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Вы не выбрали цвет, по умолчанию чёрный");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Введите корректную высоту и ширину!");
+                }
+            }catch (Exception)
+            {
+                MessageBox.Show("Ошибка при создании сцены!");
             }
         }
     }

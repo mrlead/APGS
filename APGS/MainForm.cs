@@ -24,6 +24,25 @@ namespace APGS
             InitializeComponent();
         }
 
+        public PictureBox GetPictureBox()
+        {
+            return render;
+        }
+
+        public void scene_managment(int width, int height, System.Drawing.Color background)
+        {
+            render.Width = width;
+            render.Height = height;
+            render.BackColor = background;
+        }
+
+        //Создание сцены
+        private void button1_Click(object sender, EventArgs e)
+        {
+            SceneBuilder sc = new SceneBuilder(this);
+            sc.Show();
+        }
+
         //z-buffer
         private void z_buffer_func()
         {
@@ -45,7 +64,7 @@ namespace APGS
         public void create_model()
         {
             var obj = new Obj();
-            obj.LoadObj("../../test_model/20.obj");
+            obj.LoadObj("../../test_model/4.obj");
 
             if(wire_but.Checked)
             {
@@ -200,6 +219,18 @@ namespace APGS
             T c = x;
             x = y;
             y = c;
+        }
+
+        //сохранение сцены
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        //удаление сцены
+        private void button3_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
