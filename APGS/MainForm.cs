@@ -13,10 +13,7 @@ namespace APGS
         System.Drawing.Color red = System.Drawing.Color.Red;
         System.Drawing.Color white = System.Drawing.Color.White;
 
-        public static Bitmap picture = new Bitmap(1000, 1000);
-        int width_picture = picture.Width;
-        int height_picture = picture.Height;
-        Graphics graphics = Graphics.FromImage(picture);
+        public static Bitmap picture;
         static int[] z_buff;
 
         public MainForm()
@@ -34,6 +31,13 @@ namespace APGS
             render.Width = width;
             render.Height = height;
             render.BackColor = background;
+            picture = new Bitmap(width, height);
+        }
+
+        private void clear_picture()
+        {
+            Graphics graphics = Graphics.FromImage(picture);
+            graphics.Clear(render.BackColor);
         }
 
         //Создание сцены
@@ -61,7 +65,7 @@ namespace APGS
         private void start_render_Click(object sender, EventArgs e)
         {
             z_buffer_func();
-            graphics.Clear(black);
+            clear_picture();
             create_model();
         }
 
