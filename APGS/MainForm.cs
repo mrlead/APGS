@@ -14,6 +14,8 @@ namespace APGS
         System.Drawing.Color white = System.Drawing.Color.White;
 
         public static Bitmap picture;
+        //Vertex m2v;
+        const int depth = 255;
         static int[] z_buff;
 
         public MainForm()
@@ -32,6 +34,7 @@ namespace APGS
             render.Height = height;
             render.BackColor = background;
             picture = new Bitmap(width, height);
+            start_render.Enabled = true;
         }
 
         private void clear_picture()
@@ -235,7 +238,55 @@ namespace APGS
             {
                 message(false, "Возникла проблема при отрисовке объекта");
             }
+        }
 
+        //Работа с преобразованиями
+        private Vertex m2v(Matrix m)
+        {
+            Vertex s = null;
+            s.X = m.element[0, 0] / m.element[3, 0];
+            s.Y = m.element[1, 0] / m.element[3, 0];
+            s.Z = m.element[2, 0] / m.element[3, 0];
+            return s;
+        }
+
+        Matrix v2m(Vertex v)
+        {
+            Matrix m = new Matrix(4, 1);
+            m.element[0, 0] = v.X;
+            m.element[1, 0] = v.Y;
+            m.element[2, 0] = v.Z;
+            m.element[3, 0] = 1.0;
+            return m;
+        }
+
+        Matrix viewport(int x, int y, int w, int h)
+        {
+            Matrix m = new Matrix(4);
+            m.element[0, 3] = x + w / 2;
+            m.element[1, 3] = y + h / 2;
+            m.element[2, 3] = depth / 2;
+
+            m.element[0, 0] = w / 2;
+            m.element[1, 1] = h / 2;
+            m.element[2, 2] = depth / 2;
+            return m;
+        }
+
+        Matrix translation(Vertex v)
+        {
+            Matrix tr = new Matrix(4);
+            tr.element[0, 3] = v.X;
+            tr.element[1, 3] = v.Y;
+            tr.element[2, 3] = v.Z;
+            return tr;
+        }
+
+        Matrix zoom(float factor)
+        {
+            Matrix z = new Matrix(4);
+            z.element[0, 0] = z.element[1, 1] = z.element[2, 2] = factor;
+            return z;
         }
 
         //Функция обмена данными координат
@@ -259,6 +310,8 @@ namespace APGS
             render.Width = 0;
             render.BackColor = white;
             z_buffer_clear();
+            start_render.Enabled = false;
+            picture.Dispose();
         }
     }
 }
