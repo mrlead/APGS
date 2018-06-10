@@ -35,16 +35,8 @@ namespace APGS
                 width = Convert.ToInt32(width_val.Text);
                 if (width >= 500 && width <= 1000 && height >= 500 && height <= 1000)
                 {
-                    if (color != null)
-                    {
-                        color = Color.Black;
-                        form.scene_managment(width, height, color);
-                        Close();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Вы не выбрали цвет, по умолчанию чёрный");
-                    }
+                    form.scene_managment(width, height, color);
+                    Close();
                 }
                 else
                 {

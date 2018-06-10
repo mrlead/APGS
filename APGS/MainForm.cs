@@ -53,6 +53,11 @@ namespace APGS
             }
         }
 
+        private void z_buffer_clear()
+        {
+            Array.Clear(z_buff, 0, z_buff.Length);
+        }
+
         private void start_render_Click(object sender, EventArgs e)
         {
             z_buffer_func();
@@ -233,7 +238,7 @@ namespace APGS
             render.Height = 0;
             render.Width = 0;
             render.BackColor = white;
-            z_buff = null;
+            z_buffer_clear();
         }
     }
 }
