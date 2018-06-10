@@ -289,6 +289,33 @@ namespace APGS
             return z;
         }
 
+        Matrix rotation_x(float cosangle, float sinangle)
+        {
+            Matrix r = new Matrix(4);
+            r.element[1, 1] = r.element[2, 2] = cosangle;
+            r.element[1, 2] = -sinangle;
+            r.element[2, 1] = sinangle;
+            return r;
+        }
+
+        Matrix rotation_y(float cosangle, float sinangle)
+        {
+            Matrix r = new Matrix(4);
+            r.element[0, 0] = r.element[2, 2] = cosangle;
+            r.element[0, 2] = sinangle;
+            r.element[2, 0] = -sinangle;
+            return r;
+        }
+
+        Matrix rotation_z(float cosangle, float sinangle)
+        {
+            Matrix r = new Matrix(4);
+            r.element[0, 0] = r.element[1, 1] = cosangle;
+            r.element[0, 1] = -sinangle;
+            r.element[1, 0] = sinangle;
+            return r;
+        }
+
         //Функция обмена данными координат
         static void Swap<T>(ref T x, ref T y)
         {
