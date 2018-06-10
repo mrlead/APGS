@@ -116,7 +116,7 @@
             // alarma_lbl
             // 
             this.alarma_lbl.AutoSize = true;
-            this.alarma_lbl.Location = new System.Drawing.Point(12, 590);
+            this.alarma_lbl.Location = new System.Drawing.Point(15, 669);
             this.alarma_lbl.Name = "alarma_lbl";
             this.alarma_lbl.Size = new System.Drawing.Size(0, 13);
             this.alarma_lbl.TabIndex = 5;
@@ -337,7 +337,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1025, 669);
+            this.ClientSize = new System.Drawing.Size(1025, 687);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.alarma_lbl);

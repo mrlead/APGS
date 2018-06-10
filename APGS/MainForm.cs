@@ -65,6 +65,20 @@ namespace APGS
             create_model();
         }
 
+        private void message(bool flag, string s)
+        {
+            if(flag)
+            {
+                alarma_lbl.BackColor = System.Drawing.Color.Green;
+                alarma_lbl.Text = s;
+            }
+            else
+            {
+                alarma_lbl.BackColor = System.Drawing.Color.Red;
+                alarma_lbl.Text = s;
+            }
+        }
+
         //создание модели проволка/полная
         public void create_model()
         {
@@ -79,7 +93,7 @@ namespace APGS
                     int[] face = obj.FaceList[k].VertexIndexList;
                     for (int j = 0; j < 3; j++)
                     {
-                        line((int)(obj.VertexList[face[j]].X + 100), (int)(obj.VertexList[face[j]].Y + 500), (int)(obj.VertexList[face[(j + 1) % 3]].X + 100), (int)(obj.VertexList[face[(j + 1) % 3]].Y + 500), picture, red); 
+                        line((int)(obj.VertexList[face[j]].X + render.Width / 2), (int)(obj.VertexList[face[j]].Y + render.Height / 2), (int)(obj.VertexList[face[(j + 1) % 3]].X + render.Width / 2), (int)(obj.VertexList[face[(j + 1) % 3]].Y + render.Height / 2), picture, red); 
                     }
                 }
                 render.Image = picture;
@@ -94,9 +108,9 @@ namespace APGS
                 {
                     Vertex t0 = obj.VertexList[i];
 
-                    t0.X += 400;
-                    t0.Y += 400;
-                    t0.Z += 400;
+                    t0.X += render.Width / 2;
+                    t0.Y += render.Height / 2;
+                    t0.Z += 0;
                 }
 
                 for (int i = 0; i < obj.FaceList.Count; i++)
@@ -163,10 +177,11 @@ namespace APGS
                         }
                     }
                 }
+                message(true, "Отрисовка готова");
             }
             catch (Exception)
             {
-                alarma_lbl.Text = "Возникла проблема при отрисовке модели";
+                message(false, "Возникла проблема при отрисовке объекта");
             }
         }
 
@@ -210,10 +225,11 @@ namespace APGS
                         error2 -= dx * 2;
                     }
                 }
+                message(true, "Отрисовка готова");
             }
             catch (Exception)
             {
-                alarma_lbl.Text = "Возникла проблема при отрисовке модели";
+                message(false, "Возникла проблема при отрисовке объекта");
             }
 
         }
