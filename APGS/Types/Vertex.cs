@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Media3D;
 
 namespace ObjParser.Types
 {
@@ -65,6 +66,26 @@ namespace ObjParser.Types
         public static Vertex operator +(Vertex c1, Vertex c2)
         {
             return new Vertex { X = c1.X + c2.X, Y = c1.Y + c2.Y, Z = c1.Z + c2.Z };
+        }
+
+        public static Vertex operator *(Vertex c1, Matrix3D World)
+        {
+            return new Vertex
+            {
+                X = World.M11 * c1.X + World.M12 * c1.Y + World.M13 * c1.Z + World.M14,
+                Y = World.M21 * c1.X + World.M22 * c1.Y + World.M23 * c1.Z + World.M24,
+                Z = World.M31 * c1.X + World.M32 * c1.Y + World.M33 * c1.Z + World.M34
+            };
+        }
+
+        public static Vertex operator +(Vertex c1, Matrix3D World)
+        {
+            return new Vertex
+            {
+                X = World.M11 + c1.X,
+                Y = World.M22 + c1.Y,
+                Z = World.M33 + c1.Z
+            };
         }
 
         public override string ToString()

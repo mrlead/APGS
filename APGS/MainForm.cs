@@ -33,19 +33,26 @@ namespace APGS
         Matrix3D rotate_x = Matrix3D.Identity;
         Matrix3D rotate_y = Matrix3D.Identity;
         Matrix3D rotate_z = Matrix3D.Identity;
-        Matrix3D Sym = Matrix3D.Identity;
         //Конец объявления объектов преобразования
 
         public MainForm()
         {
             InitializeComponent();
+            Zoom.M11 = 1;
+            Zoom.M22 = 1;
+            Zoom.M33 = 1;
+            Loc.M11 = 0;
+            Loc.M22 = 0;
+            Loc.M33 = 0;
         }
 
+        //Ссылка на объект для управления вне класса
         public PictureBox GetPictureBox()
         {
             return render;
         }
 
+        //Создание сцены
         public void scene_managment(int width, int height, System.Drawing.Color background)
         {
             render.Width = width;
@@ -55,6 +62,7 @@ namespace APGS
             start_render.Enabled = true;
         }
 
+        //Очистка bitmap
         private void clear_picture()
         {
             Graphics graphics = Graphics.FromImage(picture);
@@ -68,7 +76,7 @@ namespace APGS
             sc.Show();
         }
 
-        //z-buffer
+        //Инициализация z-buffer
         private void z_buffer_func()
         {
             z_buff = new int[render.Width * render.Height];
@@ -78,19 +86,21 @@ namespace APGS
             }
         }
 
+        //Очитска z-buffer
         private void z_buffer_clear()
         {
             Array.Clear(z_buff, 0, z_buff.Length);
         }
 
+        //Запуск отрисовки
         private void start_render_Click(object sender, EventArgs e)
         {
-            obj.LoadObj("../../test_model/4.obj");
             z_buffer_func();
             clear_picture();
             create_model();
         }
 
+        //Функция вывода сообщений в статус бар
         private void message(bool flag, string s)
         {
             if(flag)
@@ -108,18 +118,75 @@ namespace APGS
         //создание модели проволка/полная
         public void create_model()
         {
-            var obj = new Obj();
             obj.LoadObj("../../test_model/4.obj");
 
             if(wire_but.Checked)
             {
+                double rad_x = 3.14 * x_angle / 180;
+                double rad_y = 3.14 * y_angle / 180;
+                double rad_z = 3.14 * z_angle / 180;
+
+                rotate_x.M22 = Math.Cos(rad_x);
+                rotate_x.M23 = Math.Sin(rad_x);
+                rotate_x.M32 = - Math.Sin(rad_x);
+                rotate_x.M33 = Math.Cos(rad_x);
+
+                rotate_y.M11 = Math.Cos(rad_y);
+                rotate_y.M13 = -Math.Sin(rad_y);
+                rotate_y.M31 = Math.Sin(rad_y);
+                rotate_y.M33 = Math.Cos(rad_y);
+
+                rotate_z.M11 = Math.Cos(rad_z);
+                rotate_z.M12 = Math.Sin(rad_z);
+                rotate_z.M21 = -Math.Sin(rad_z);
+                rotate_z.M22 = Math.Cos(rad_z);
+
+                double rasterization = -1000;
+                double scaling = 1;
+
+                Matrix3D World;
                 //проволочный рендер
-                for (int k = 0; k < obj.FaceList.Count; k++)
+
+                for (int i = 0; i < obj.FaceList.Count; i++)
                 {
-                    int[] face = obj.FaceList[k].VertexIndexList;
+                    int[] face = obj.FaceList[i].VertexIndexList;
                     for (int j = 0; j < 3; j++)
                     {
-                        line((int)(obj.VertexList[face[j]].X + render.Width / 2), (int)(obj.VertexList[face[j]].Y + render.Height / 2), (int)(obj.VertexList[face[(j + 1) % 3]].X + render.Width / 2), (int)(obj.VertexList[face[(j + 1) % 3]].Y + render.Height / 2), picture, red); 
+                        Vertex p1 = new Vertex();
+                        Vertex p2 = new Vertex();
+
+                        p1.X = (obj.VertexList[face[j]].X);
+                        p1.Y = (obj.VertexList[face[j]].Y);
+                        p1.Z = (obj.VertexList[face[j]].Z);
+
+                        p2.X = obj.VertexList[face[(j + 1) % 3]].X;
+                        p2.Y = obj.VertexList[face[(j + 1) % 3]].Y;
+                        p2.Z = obj.VertexList[face[(j + 1) % 3]].Z;
+
+                        World = Zoom * rotate_x * rotate_y * rotate_z;
+
+                        p1 = (p1 * World) + Loc;
+                        p2 = (p2 * World) + Loc;
+
+                        if(proj == 0)
+                        {
+                            p1.X /= (p1.Z / (rasterization) + 1);
+                            p1.Y /= (p1.Z / (rasterization) + 1);
+                            p1.Z /= (p1.Z / (rasterization) + 1);
+                            p2.X /= (p2.Z / (rasterization) + 1);
+                            p2.Y /= (p2.Z / (rasterization) + 1);
+                            p2.Z /= (p2.Z / (rasterization) + 1);
+                        }
+
+                        p1.X *= scaling;
+                        p1.Y *= scaling;
+                        p1.Z *= scaling;
+                        p2.X *= scaling;
+                        p2.Y *= scaling;
+                        p2.Z *= scaling;
+
+                        //line((int)(obj.VertexList[face[j]].X + render.Width / 2), (int)(obj.VertexList[face[j]].Y + render.Height / 2), (int)(obj.VertexList[face[(j + 1) % 3]].X + render.Width / 2), (int)(obj.VertexList[face[(j + 1) % 3]].Y + render.Height / 2), picture, red); 
+                        line((int)(p1.X), (int)(p1.Y) + 200, (int)(p2.X), (int)(p2.Y) + 200, picture, red);
                     }
                 }
                 render.Image = picture;
@@ -289,6 +356,20 @@ namespace APGS
         {
             //завтра...
             //дедлайн 14.06, я в ****...
+        }
+
+        private void radio_center_Click(object sender, EventArgs e)
+        {
+            proj = 0;
+            clear_picture();
+            create_model();
+        }
+
+        private void radio_par_CheckedChanged(object sender, EventArgs e)
+        {
+            proj = 1;
+            clear_picture();
+            create_model();
         }
     }
 }

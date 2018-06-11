@@ -56,6 +56,9 @@
             this.button14 = new System.Windows.Forms.Button();
             this.button15 = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.radio_center = new System.Windows.Forms.RadioButton();
+            this.radio_par = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.render)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -63,6 +66,7 @@
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.tabPage3.SuspendLayout();
             this.SuspendLayout();
             // 
             // render
@@ -191,6 +195,7 @@
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Location = new System.Drawing.Point(7, 19);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -349,6 +354,43 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Отрисовка";
             // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.radio_par);
+            this.tabPage3.Controls.Add(this.radio_center);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(140, 94);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Проецирование";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // radio_center
+            // 
+            this.radio_center.AutoSize = true;
+            this.radio_center.Checked = true;
+            this.radio_center.Location = new System.Drawing.Point(24, 25);
+            this.radio_center.Name = "radio_center";
+            this.radio_center.Size = new System.Drawing.Size(92, 17);
+            this.radio_center.TabIndex = 0;
+            this.radio_center.TabStop = true;
+            this.radio_center.Text = "Центральное";
+            this.radio_center.UseVisualStyleBackColor = true;
+            this.radio_center.Click += new System.EventHandler(this.radio_center_Click);
+            // 
+            // radio_par
+            // 
+            this.radio_par.AutoSize = true;
+            this.radio_par.Location = new System.Drawing.Point(24, 48);
+            this.radio_par.Name = "radio_par";
+            this.radio_par.Size = new System.Drawing.Size(99, 17);
+            this.radio_par.TabIndex = 1;
+            this.radio_par.TabStop = true;
+            this.radio_par.Text = "Параллельное";
+            this.radio_par.UseVisualStyleBackColor = true;
+            this.radio_par.CheckedChanged += new System.EventHandler(this.radio_par_CheckedChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -370,6 +412,8 @@
             this.tabPage2.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -405,6 +449,9 @@
         private System.Windows.Forms.Button button15;
         private System.Windows.Forms.Button button16;
         private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.RadioButton radio_par;
+        private System.Windows.Forms.RadioButton radio_center;
     }
 }
 
