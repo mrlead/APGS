@@ -120,33 +120,36 @@ namespace APGS
         {
             obj.LoadObj("../../test_model/4.obj");
 
-            if(wire_but.Checked)
+            z_buffer_clear();
+            z_buffer_func();
+
+            double rad_x = Math.PI * x_angle / 180;
+            double rad_y = Math.PI * y_angle / 180;
+            double rad_z = Math.PI * z_angle / 180;
+
+            rotate_x.M22 = Math.Cos(rad_x);
+            rotate_x.M23 = Math.Sin(rad_x);
+            rotate_x.M32 = -Math.Sin(rad_x);
+            rotate_x.M33 = Math.Cos(rad_x);
+
+            rotate_y.M11 = Math.Cos(rad_y);
+            rotate_y.M13 = -Math.Sin(rad_y);
+            rotate_y.M31 = Math.Sin(rad_y);
+            rotate_y.M33 = Math.Cos(rad_y);
+
+            rotate_z.M11 = Math.Cos(rad_z);
+            rotate_z.M12 = Math.Sin(rad_z);
+            rotate_z.M21 = -Math.Sin(rad_z);
+            rotate_z.M22 = Math.Cos(rad_z);
+
+            double rasterization = -1000;
+            double scaling = 1;
+
+            Matrix3D World;
+
+            if (wire_but.Checked)
             {
-                double rad_x = 3.14 * x_angle / 180;
-                double rad_y = 3.14 * y_angle / 180;
-                double rad_z = 3.14 * z_angle / 180;
-
-                rotate_x.M22 = Math.Cos(rad_x);
-                rotate_x.M23 = Math.Sin(rad_x);
-                rotate_x.M32 = - Math.Sin(rad_x);
-                rotate_x.M33 = Math.Cos(rad_x);
-
-                rotate_y.M11 = Math.Cos(rad_y);
-                rotate_y.M13 = -Math.Sin(rad_y);
-                rotate_y.M31 = Math.Sin(rad_y);
-                rotate_y.M33 = Math.Cos(rad_y);
-
-                rotate_z.M11 = Math.Cos(rad_z);
-                rotate_z.M12 = Math.Sin(rad_z);
-                rotate_z.M21 = -Math.Sin(rad_z);
-                rotate_z.M22 = Math.Cos(rad_z);
-
-                double rasterization = -1000;
-                double scaling = 1;
-
-                Matrix3D World;
                 //проволочный рендер
-
                 for (int i = 0; i < obj.FaceList.Count; i++)
                 {
                     int[] face = obj.FaceList[i].VertexIndexList;
@@ -195,29 +198,49 @@ namespace APGS
             else
             {
                 //закрашенный рендер
-
-                //сдвиг модели на центр сцены
-                for (int i = 0; i < obj.VertexList.Count; i++)
-                {
-                    Vertex t0 = obj.VertexList[i];
-
-                    t0.X += render.Width / 2;
-                    t0.Y += render.Height / 2;
-                    t0.Z += 0;
-                }
-
                 for (int i = 0; i < obj.FaceList.Count; i++)
                 {
                     int[] face = obj.FaceList[i].VertexIndexList;
-                    Vertex[] world_coords = new Vertex[3];
-                    for (int j = 0; j < 3; j++)
-                    {
-                        Vertex v = obj.VertexList[face[j]];
-                        world_coords[j] = v;
-                    }
-                    triangle(obj.VertexList[face[0]], obj.VertexList[face[1]], obj.VertexList[face[2]], picture, red);
-                }
 
+                    Vertex p1 = new Vertex();
+                    Vertex p2 = new Vertex();
+                    Vertex p3 = new Vertex();
+
+                    p1 = obj.VertexList[face[0]];
+                    p2 = obj.VertexList[face[1]];
+                    p3 = obj.VertexList[face[2]];
+
+                    World = Zoom * rotate_x * rotate_y * rotate_z;
+
+                    p1 = p1 * World;
+                    p2 = p2 * World;
+                    p3 = p3 * World;
+                    p1 = p1 + Loc;
+                    p2 = p2 + Loc;
+                    p3 = p3 + Loc;
+
+                    if (proj == 0)
+                    {
+                        p1.X /= (p1.Z / (rasterization) + 1);
+                        p1.Y /= (p1.Z / (rasterization) + 1);
+                        p2.X /= (p2.Z / (rasterization) + 1);
+                        p2.Y /= (p2.Z / (rasterization) + 1);
+                        p3.X /= (p3.Z / (rasterization) + 1);
+                        p3.Y /= (p3.Z / (rasterization) + 1);
+                    }
+
+                    p1.X *= scaling;
+                    p1.Y *= scaling;
+                    p1.Z *= scaling;
+                    p2.X *= scaling;
+                    p2.Y *= scaling;
+                    p2.Z *= scaling;
+                    p3.X *= scaling;
+                    p3.Y *= scaling;
+                    p3.Z *= scaling;
+
+                    triangle(p1, p2, p3, picture, red);
+                }
                 render.Image = picture;
                 picture.RotateFlip(RotateFlipType.RotateNoneFlipY);
             }
