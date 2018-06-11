@@ -325,14 +325,12 @@ namespace APGS
                 int y = y0;
                 for (int x = x0; x <= x1; x++)
                 {
+                    if (y < 0 || x < 0 || x >= render.Width || y >= render.Height)
+                        continue;
                     if (steep)
-                    {
                         image.SetPixel(y, x, color);
-                    }
                     else
-                    {
                         image.SetPixel(x, y, color);
-                    }
                     error2 += derror2;
 
                     if (error2 > dx)
