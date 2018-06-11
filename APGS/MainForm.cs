@@ -20,7 +20,6 @@ namespace APGS
         public static Bitmap picture;
         const int depth = 255;
         static int[] z_buff;
-        Obj obj = new Obj();
         //Конец объявления общих объектов
 
         //Объекты для преобразований
@@ -28,7 +27,6 @@ namespace APGS
         double y_angle = 0;
         double z_angle = 0;
         int proj = 0;
-        int zoom_value = 2;
         Matrix3D Zoom = Matrix3D.Identity;
         Matrix3D Loc = Matrix3D.Identity;
         Matrix3D rotate_x = Matrix3D.Identity;
@@ -66,8 +64,8 @@ namespace APGS
         //Очистка bitmap
         private void clear_picture()
         {
-            Graphics graphics = Graphics.FromImage(picture);
-            graphics.Clear(render.BackColor);
+            picture.Dispose();
+            picture = new Bitmap(render.Width, render.Height);
         }
 
         //Создание сцены
@@ -119,10 +117,12 @@ namespace APGS
         //создание модели проволка/полная
         public void create_model()
         {
+            var obj = new Obj();
             obj.LoadObj("../../test_model/main.obj");
 
             z_buffer_clear();
             z_buffer_func();
+            clear_picture();
 
             double rad_x = Math.PI * x_angle / 180;
             double rad_y = Math.PI * y_angle / 180;
@@ -189,7 +189,6 @@ namespace APGS
                         p2.Y *= scaling;
                         p2.Z *= scaling;
 
-                        //line((int)(obj.VertexList[face[j]].X + render.Width / 2), (int)(obj.VertexList[face[j]].Y + render.Height / 2), (int)(obj.VertexList[face[(j + 1) % 3]].X + render.Width / 2), (int)(obj.VertexList[face[(j + 1) % 3]].Y + render.Height / 2), picture, red); 
                         line((int)(p1.X) + 200, (int)(p1.Y) + render.Height / 2, (int)(p2.X) + 200, (int)(p2.Y) + render.Height / 2, picture, red);
                     }
                 }
@@ -383,23 +382,12 @@ namespace APGS
         private void radio_center_Click(object sender, EventArgs e)
         {
             proj = 0;
-            clear_picture();
             create_model();
         }
 
         private void radio_par_CheckedChanged(object sender, EventArgs e)
         {
             proj = 1;
-            clear_picture();
-            create_model();
-        }
-
-        private void button17_Click(object sender, EventArgs e)
-        {
-            Zoom.M11 = zoom_val.Value / 10.0;
-            Zoom.M22 = zoom_val.Value / 10.0;
-            Zoom.M33 = zoom_val.Value / 10.0;
-            clear_picture();
             create_model();
         }
 
@@ -408,7 +396,92 @@ namespace APGS
             Zoom.M11 = zoom_val.Value / 10.0;
             Zoom.M22 = zoom_val.Value / 10.0;
             Zoom.M33 = zoom_val.Value / 10.0;
-            clear_picture();
+            create_model();
+        }
+
+        private void button15_Click(object sender, EventArgs e)
+        {
+            x_angle += 1;
+            create_model();
+        }
+
+        private void button14_Click(object sender, EventArgs e)
+        {
+            x_angle -= 1;
+            create_model();
+        }
+
+        private void button13_Click(object sender, EventArgs e)
+        {
+            y_angle += 1;
+            create_model();
+        }
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+            y_angle -= 1;
+            create_model();
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            z_angle += 1;
+            create_model();
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            z_angle -= 1;
+            create_model();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Loc.M11 -= 2;
+            create_model();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            Loc.M11 += 2;
+            create_model();
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            Loc.M22 -= 2;
+            create_model();
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            Loc.M22 += 2;
+            create_model();
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            Loc.M33 -= 2;
+            create_model();
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            Loc.M33 += 2;
+            create_model();
+        }
+
+        private void button17_Click(object sender, EventArgs e)
+        {
+            Zoom.M11 = 1;
+            Zoom.M22 = 1;
+            Zoom.M33 = 1;
+            Loc.M11 = 0;
+            Loc.M22 = 0;
+            Loc.M33 = 0;
+            x_angle = 0;
+            y_angle = 0;
+            z_angle = 0;
             create_model();
         }
     }

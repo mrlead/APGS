@@ -58,9 +58,10 @@
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.radio_par = new System.Windows.Forms.RadioButton();
             this.radio_center = new System.Windows.Forms.RadioButton();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.zoom_val = new System.Windows.Forms.TrackBar();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.button17 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.render)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -68,9 +69,9 @@
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
-            this.groupBox3.SuspendLayout();
             this.tabPage4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.zoom_val)).BeginInit();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // render
@@ -93,7 +94,7 @@
             // start_render
             // 
             this.start_render.Enabled = false;
-            this.start_render.Location = new System.Drawing.Point(35, 106);
+            this.start_render.Location = new System.Drawing.Point(30, 85);
             this.start_render.Name = "start_render";
             this.start_render.Size = new System.Drawing.Size(75, 23);
             this.start_render.TabIndex = 2;
@@ -231,6 +232,7 @@
             this.button8.TabIndex = 5;
             this.button8.Text = "Z ->";
             this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
             // button9
             // 
@@ -240,6 +242,7 @@
             this.button9.TabIndex = 4;
             this.button9.Text = "<- Z";
             this.button9.UseVisualStyleBackColor = true;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
             // button6
             // 
@@ -249,6 +252,7 @@
             this.button6.TabIndex = 3;
             this.button6.Text = "Y ->";
             this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // button7
             // 
@@ -258,6 +262,7 @@
             this.button7.TabIndex = 2;
             this.button7.Text = "<- Y";
             this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
             // button5
             // 
@@ -267,6 +272,7 @@
             this.button5.TabIndex = 1;
             this.button5.Text = "X ->";
             this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // button4
             // 
@@ -276,6 +282,7 @@
             this.button4.TabIndex = 0;
             this.button4.Text = "<- X";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // tabPage2
             // 
@@ -301,6 +308,7 @@
             this.button10.TabIndex = 11;
             this.button10.Text = "Z ->";
             this.button10.UseVisualStyleBackColor = true;
+            this.button10.Click += new System.EventHandler(this.button10_Click);
             // 
             // button11
             // 
@@ -310,6 +318,7 @@
             this.button11.TabIndex = 10;
             this.button11.Text = "<- Z";
             this.button11.UseVisualStyleBackColor = true;
+            this.button11.Click += new System.EventHandler(this.button11_Click);
             // 
             // button12
             // 
@@ -319,6 +328,7 @@
             this.button12.TabIndex = 9;
             this.button12.Text = "Y ->";
             this.button12.UseVisualStyleBackColor = true;
+            this.button12.Click += new System.EventHandler(this.button12_Click);
             // 
             // button13
             // 
@@ -328,6 +338,7 @@
             this.button13.TabIndex = 8;
             this.button13.Text = "<- Y";
             this.button13.UseVisualStyleBackColor = true;
+            this.button13.Click += new System.EventHandler(this.button13_Click);
             // 
             // button14
             // 
@@ -337,6 +348,7 @@
             this.button14.TabIndex = 7;
             this.button14.Text = "X ->";
             this.button14.UseVisualStyleBackColor = true;
+            this.button14.Click += new System.EventHandler(this.button14_Click);
             // 
             // button15
             // 
@@ -346,6 +358,7 @@
             this.button15.TabIndex = 6;
             this.button15.Text = "<- X";
             this.button15.UseVisualStyleBackColor = true;
+            this.button15.Click += new System.EventHandler(this.button15_Click);
             // 
             // tabPage3
             // 
@@ -384,18 +397,6 @@
             this.radio_center.UseVisualStyleBackColor = true;
             this.radio_center.Click += new System.EventHandler(this.radio_center_Click);
             // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.wire_but);
-            this.groupBox3.Controls.Add(this.raster_but);
-            this.groupBox3.Controls.Add(this.start_render);
-            this.groupBox3.Location = new System.Drawing.Point(308, 518);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(143, 148);
-            this.groupBox3.TabIndex = 12;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Отрисовка";
-            // 
             // tabPage4
             // 
             this.tabPage4.Controls.Add(this.zoom_val);
@@ -419,6 +420,29 @@
             this.zoom_val.Value = 8;
             this.zoom_val.Scroll += new System.EventHandler(this.zoom_val_Scroll);
             // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.button17);
+            this.groupBox3.Controls.Add(this.wire_but);
+            this.groupBox3.Controls.Add(this.raster_but);
+            this.groupBox3.Controls.Add(this.start_render);
+            this.groupBox3.Location = new System.Drawing.Point(308, 518);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(143, 148);
+            this.groupBox3.TabIndex = 12;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Отрисовка";
+            // 
+            // button17
+            // 
+            this.button17.Location = new System.Drawing.Point(6, 115);
+            this.button17.Name = "button17";
+            this.button17.Size = new System.Drawing.Size(132, 23);
+            this.button17.TabIndex = 5;
+            this.button17.Text = "Исходное положение";
+            this.button17.UseVisualStyleBackColor = true;
+            this.button17.Click += new System.EventHandler(this.button17_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -440,11 +464,11 @@
             this.tabPage2.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.zoom_val)).EndInit();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -485,6 +509,7 @@
         private System.Windows.Forms.RadioButton radio_center;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.TrackBar zoom_val;
+        private System.Windows.Forms.Button button17;
     }
 }
 
