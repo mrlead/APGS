@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using ObjParser;
 using ObjParser.Types;
+using System.Windows.Media.Media3D;
 
 namespace APGS
 {
@@ -12,11 +13,28 @@ namespace APGS
         System.Drawing.Color black = System.Drawing.Color.Black;
         System.Drawing.Color red = System.Drawing.Color.Red;
         System.Drawing.Color white = System.Drawing.Color.White;
+        System.Drawing.Color green = System.Drawing.Color.Green;
+        //Конец объявления констант
 
+        //Общие объекты
         public static Bitmap picture;
-        //Vertex m2v;
         const int depth = 255;
         static int[] z_buff;
+        Obj obj = new Obj();
+        //Конец объявления общих объектов
+
+        //Объекты для преобразований
+        double x_angle = 0;
+        double y_angle = 0;
+        double z_angle = 0;
+        int proj = 0;
+        Matrix3D Zoom = Matrix3D.Identity;
+        Matrix3D Loc = Matrix3D.Identity;
+        Matrix3D rotate_x = Matrix3D.Identity;
+        Matrix3D rotate_y = Matrix3D.Identity;
+        Matrix3D rotate_z = Matrix3D.Identity;
+        Matrix3D Sym = Matrix3D.Identity;
+        //Конец объявления объектов преобразования
 
         public MainForm()
         {
@@ -67,6 +85,7 @@ namespace APGS
 
         private void start_render_Click(object sender, EventArgs e)
         {
+            obj.LoadObj("../../test_model/4.obj");
             z_buffer_func();
             clear_picture();
             create_model();
@@ -154,9 +173,9 @@ namespace APGS
                 {
                     bool sec_h = i > t1.Y - t0.Y || t1.Y == t0.Y;
                     double seg_h = sec_h ? t2.Y - t1.Y : t1.Y - t0.Y;
-                    double alpha = (double)i / total_height;
+                    double alpha = i / total_height;
 
-                    double beta = (double)(i - (sec_h ? t1.Y - t0.Y : 0)) / seg_h;
+                    double beta = (i - (sec_h ? t1.Y - t0.Y : 0)) / seg_h;
 
                     Vertex A = t0 + (t2 - t0) * alpha;
 
@@ -168,12 +187,12 @@ namespace APGS
                     }
                     for (double j = A.X; j <= B.X; j++)
                     {
-                        double phi = B.X == A.X ? 1 : (double)(j - A.X) / (double)(B.X - A.X);
+                        double phi = B.X == A.X ? 1 : (j - A.X) / (B.X - A.X);
                         Vertex C = new Vertex();
 
                         C = A + (B - A) * phi;
 
-                        int idx = (int)((int)C.X + (int)C.Y * render.Width);
+                        int idx = ((int)C.X + (int)C.Y * render.Width);
 
                         if ((int)C.X >= render.Width || (int)C.Y >= render.Height || (int)C.X < 0) continue;
                         if (z_buff[idx] < (int)C.Z)
@@ -240,84 +259,8 @@ namespace APGS
             }
         }
 
-        //Работа с преобразованиями
-        private Vertex m2v(Matrix m)
-        {
-            Vertex s = null;
-            s.X = m.element[0, 0] / m.element[3, 0];
-            s.Y = m.element[1, 0] / m.element[3, 0];
-            s.Z = m.element[2, 0] / m.element[3, 0];
-            return s;
-        }
-
-        Matrix v2m(Vertex v)
-        {
-            Matrix m = new Matrix(4, 1);
-            m.element[0, 0] = v.X;
-            m.element[1, 0] = v.Y;
-            m.element[2, 0] = v.Z;
-            m.element[3, 0] = 1.0;
-            return m;
-        }
-
-        Matrix viewport(int x, int y, int w, int h)
-        {
-            Matrix m = new Matrix(4);
-            m.element[0, 3] = x + w / 2;
-            m.element[1, 3] = y + h / 2;
-            m.element[2, 3] = depth / 2;
-
-            m.element[0, 0] = w / 2;
-            m.element[1, 1] = h / 2;
-            m.element[2, 2] = depth / 2;
-            return m;
-        }
-
-        Matrix translation(Vertex v)
-        {
-            Matrix tr = new Matrix(4);
-            tr.element[0, 3] = v.X;
-            tr.element[1, 3] = v.Y;
-            tr.element[2, 3] = v.Z;
-            return tr;
-        }
-
-        Matrix zoom(float factor)
-        {
-            Matrix z = new Matrix(4);
-            z.element[0, 0] = z.element[1, 1] = z.element[2, 2] = factor;
-            return z;
-        }
-
-        Matrix rotation_x(float cosangle, float sinangle)
-        {
-            Matrix r = new Matrix(4);
-            r.element[1, 1] = r.element[2, 2] = cosangle;
-            r.element[1, 2] = -sinangle;
-            r.element[2, 1] = sinangle;
-            return r;
-        }
-
-        Matrix rotation_y(float cosangle, float sinangle)
-        {
-            Matrix r = new Matrix(4);
-            r.element[0, 0] = r.element[2, 2] = cosangle;
-            r.element[0, 2] = sinangle;
-            r.element[2, 0] = -sinangle;
-            return r;
-        }
-
-        Matrix rotation_z(float cosangle, float sinangle)
-        {
-            Matrix r = new Matrix(4);
-            r.element[0, 0] = r.element[1, 1] = cosangle;
-            r.element[0, 1] = -sinangle;
-            r.element[1, 0] = sinangle;
-            return r;
-        }
-
         //Функция обмена данными координат
-        static void Swap<T>(ref T x, ref T y)
+        void Swap<T>(ref T x, ref T y)
         {
             T c = x;
             x = y;
@@ -339,6 +282,13 @@ namespace APGS
             z_buffer_clear();
             start_render.Enabled = false;
             picture.Dispose();
+        }
+
+        //Загрузка сцены
+        private void button16_Click(object sender, EventArgs e)
+        {
+            //завтра...
+            //дедлайн 14.06, я в ****...
         }
     }
 }

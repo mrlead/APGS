@@ -175,6 +175,7 @@
             this.button16.TabIndex = 10;
             this.button16.Text = "Загрузить сцену";
             this.button16.UseVisualStyleBackColor = true;
+            this.button16.Click += new System.EventHandler(this.button16_Click);
             // 
             // groupBox2
             // 

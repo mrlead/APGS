@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿//Самопальный класс для работы с матрицами для 3D объектов
+using System.Windows.Forms;
 
 namespace APGS
 {
