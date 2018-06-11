@@ -55,18 +55,22 @@
             this.button13 = new System.Windows.Forms.Button();
             this.button14 = new System.Windows.Forms.Button();
             this.button15 = new System.Windows.Forms.Button();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.radio_center = new System.Windows.Forms.RadioButton();
             this.radio_par = new System.Windows.Forms.RadioButton();
+            this.radio_center = new System.Windows.Forms.RadioButton();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.zoom_val = new System.Windows.Forms.TrackBar();
             ((System.ComponentModel.ISupportInitialize)(this.render)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
-            this.groupBox3.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            this.tabPage4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.zoom_val)).BeginInit();
             this.SuspendLayout();
             // 
             // render
@@ -196,6 +200,7 @@
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Location = new System.Drawing.Point(7, 19);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -342,18 +347,6 @@
             this.button15.Text = "<- X";
             this.button15.UseVisualStyleBackColor = true;
             // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.wire_but);
-            this.groupBox3.Controls.Add(this.raster_but);
-            this.groupBox3.Controls.Add(this.start_render);
-            this.groupBox3.Location = new System.Drawing.Point(308, 518);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(143, 148);
-            this.groupBox3.TabIndex = 12;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Отрисовка";
-            // 
             // tabPage3
             // 
             this.tabPage3.Controls.Add(this.radio_par);
@@ -365,6 +358,18 @@
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Проецирование";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // radio_par
+            // 
+            this.radio_par.AutoSize = true;
+            this.radio_par.Location = new System.Drawing.Point(24, 48);
+            this.radio_par.Name = "radio_par";
+            this.radio_par.Size = new System.Drawing.Size(99, 17);
+            this.radio_par.TabIndex = 1;
+            this.radio_par.TabStop = true;
+            this.radio_par.Text = "Параллельное";
+            this.radio_par.UseVisualStyleBackColor = true;
+            this.radio_par.CheckedChanged += new System.EventHandler(this.radio_par_CheckedChanged);
             // 
             // radio_center
             // 
@@ -379,17 +384,40 @@
             this.radio_center.UseVisualStyleBackColor = true;
             this.radio_center.Click += new System.EventHandler(this.radio_center_Click);
             // 
-            // radio_par
+            // groupBox3
             // 
-            this.radio_par.AutoSize = true;
-            this.radio_par.Location = new System.Drawing.Point(24, 48);
-            this.radio_par.Name = "radio_par";
-            this.radio_par.Size = new System.Drawing.Size(99, 17);
-            this.radio_par.TabIndex = 1;
-            this.radio_par.TabStop = true;
-            this.radio_par.Text = "Параллельное";
-            this.radio_par.UseVisualStyleBackColor = true;
-            this.radio_par.CheckedChanged += new System.EventHandler(this.radio_par_CheckedChanged);
+            this.groupBox3.Controls.Add(this.wire_but);
+            this.groupBox3.Controls.Add(this.raster_but);
+            this.groupBox3.Controls.Add(this.start_render);
+            this.groupBox3.Location = new System.Drawing.Point(308, 518);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(143, 148);
+            this.groupBox3.TabIndex = 12;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Отрисовка";
+            // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.zoom_val);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(140, 94);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "Масштабирование";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // zoom_val
+            // 
+            this.zoom_val.Location = new System.Drawing.Point(29, 21);
+            this.zoom_val.Maximum = 16;
+            this.zoom_val.Minimum = 1;
+            this.zoom_val.Name = "zoom_val";
+            this.zoom_val.Size = new System.Drawing.Size(82, 45);
+            this.zoom_val.TabIndex = 2;
+            this.zoom_val.TabStop = false;
+            this.zoom_val.Value = 8;
+            this.zoom_val.Scroll += new System.EventHandler(this.zoom_val_Scroll);
             // 
             // MainForm
             // 
@@ -410,10 +438,13 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            this.tabPage4.ResumeLayout(false);
+            this.tabPage4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.zoom_val)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -452,6 +483,8 @@
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.RadioButton radio_par;
         private System.Windows.Forms.RadioButton radio_center;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.TrackBar zoom_val;
     }
 }
 

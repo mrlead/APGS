@@ -28,6 +28,7 @@ namespace APGS
         double y_angle = 0;
         double z_angle = 0;
         int proj = 0;
+        int zoom_value = 2;
         Matrix3D Zoom = Matrix3D.Identity;
         Matrix3D Loc = Matrix3D.Identity;
         Matrix3D rotate_x = Matrix3D.Identity;
@@ -118,7 +119,7 @@ namespace APGS
         //создание модели проволка/полная
         public void create_model()
         {
-            obj.LoadObj("../../test_model/4.obj");
+            obj.LoadObj("../../test_model/main.obj");
 
             z_buffer_clear();
             z_buffer_func();
@@ -189,7 +190,7 @@ namespace APGS
                         p2.Z *= scaling;
 
                         //line((int)(obj.VertexList[face[j]].X + render.Width / 2), (int)(obj.VertexList[face[j]].Y + render.Height / 2), (int)(obj.VertexList[face[(j + 1) % 3]].X + render.Width / 2), (int)(obj.VertexList[face[(j + 1) % 3]].Y + render.Height / 2), picture, red); 
-                        line((int)(p1.X), (int)(p1.Y) + 200, (int)(p2.X), (int)(p2.Y) + 200, picture, red);
+                        line((int)(p1.X) + 200, (int)(p1.Y) + render.Height / 2, (int)(p2.X) + 200, (int)(p2.Y) + render.Height / 2, picture, red);
                     }
                 }
                 render.Image = picture;
@@ -389,6 +390,24 @@ namespace APGS
         private void radio_par_CheckedChanged(object sender, EventArgs e)
         {
             proj = 1;
+            clear_picture();
+            create_model();
+        }
+
+        private void button17_Click(object sender, EventArgs e)
+        {
+            Zoom.M11 = zoom_val.Value / 10.0;
+            Zoom.M22 = zoom_val.Value / 10.0;
+            Zoom.M33 = zoom_val.Value / 10.0;
+            clear_picture();
+            create_model();
+        }
+
+        private void zoom_val_Scroll(object sender, EventArgs e)
+        {
+            Zoom.M11 = zoom_val.Value / 10.0;
+            Zoom.M22 = zoom_val.Value / 10.0;
+            Zoom.M33 = zoom_val.Value / 10.0;
             clear_picture();
             create_model();
         }
