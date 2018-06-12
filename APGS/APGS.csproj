@@ -64,6 +64,7 @@
     <Compile Include="SceneBuilder.Designer.cs">
       <DependentUpon>SceneBuilder.cs</DependentUpon>
     </Compile>
+    <Compile Include="Sword.cs" />
     <Compile Include="Types\Color.cs" />
     <Compile Include="Types\Face.cs" />
     <Compile Include="Types\IType.cs" />

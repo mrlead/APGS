@@ -18,7 +18,6 @@ namespace APGS
 
         //Общие объекты
         public static Bitmap picture;
-        const int depth = 255;
         static int[] z_buff;
         //Конец объявления общих объектов
 
@@ -264,13 +263,9 @@ namespace APGS
                     bool sec_h = i > t1.Y - t0.Y || t1.Y == t0.Y;
                     double seg_h = sec_h ? t2.Y - t1.Y : t1.Y - t0.Y;
                     double alpha = i / total_height;
-
                     double beta = (i - (sec_h ? t1.Y - t0.Y : 0)) / seg_h;
-
                     Vertex A = t0 + (t2 - t0) * alpha;
-
                     Vertex B = sec_h ? t1 + (t2 - t1) * beta : t0 + (t1 - t0) * beta;
-
                     if (A.X > B.X)
                     {
                         Swap(ref A, ref B);
@@ -279,17 +274,13 @@ namespace APGS
                     {
                         double phi = B.X == A.X ? 1 : (j - A.X) / (B.X - A.X);
                         Vertex C = new Vertex();
-
                         C = A + (B - A) * phi;
-
                         int idx = ((int)C.X + (int)C.Y * render.Width);
-
                         if ((int)C.X >= render.Width || (int)C.Y >= render.Height || (int)C.X < 0) continue;
                         if (z_buff[idx] < (int)C.Z)
                         {
                             z_buff[idx] = (int)C.Z;
                             bitmap.SetPixel((int)C.X, (int)C.Y, color);
-
                         }
                     }
                 }

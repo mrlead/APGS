@@ -94,7 +94,7 @@
             // start_render
             // 
             this.start_render.Enabled = false;
-            this.start_render.Location = new System.Drawing.Point(30, 85);
+            this.start_render.Location = new System.Drawing.Point(34, 86);
             this.start_render.Name = "start_render";
             this.start_render.Size = new System.Drawing.Size(75, 23);
             this.start_render.TabIndex = 2;
@@ -191,7 +191,7 @@
             this.groupBox2.Controls.Add(this.tabControl1);
             this.groupBox2.Location = new System.Drawing.Point(140, 518);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(161, 148);
+            this.groupBox2.Size = new System.Drawing.Size(214, 148);
             this.groupBox2.TabIndex = 11;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Объект";
@@ -205,7 +205,7 @@
             this.tabControl1.Location = new System.Drawing.Point(7, 19);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(148, 120);
+            this.tabControl1.Size = new System.Drawing.Size(201, 120);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -219,14 +219,14 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(140, 94);
+            this.tabPage1.Size = new System.Drawing.Size(193, 94);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Перемещение";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // button8
             // 
-            this.button8.Location = new System.Drawing.Point(73, 65);
+            this.button8.Location = new System.Drawing.Point(126, 65);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(61, 23);
             this.button8.TabIndex = 5;
@@ -246,7 +246,7 @@
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(73, 36);
+            this.button6.Location = new System.Drawing.Point(126, 36);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(61, 23);
             this.button6.TabIndex = 3;
@@ -266,7 +266,7 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(73, 7);
+            this.button5.Location = new System.Drawing.Point(126, 7);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(61, 23);
             this.button5.TabIndex = 1;
@@ -295,14 +295,14 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(140, 94);
+            this.tabPage2.Size = new System.Drawing.Size(193, 94);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Вращение";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // button10
             // 
-            this.button10.Location = new System.Drawing.Point(73, 65);
+            this.button10.Location = new System.Drawing.Point(126, 65);
             this.button10.Name = "button10";
             this.button10.Size = new System.Drawing.Size(61, 23);
             this.button10.TabIndex = 11;
@@ -322,7 +322,7 @@
             // 
             // button12
             // 
-            this.button12.Location = new System.Drawing.Point(73, 36);
+            this.button12.Location = new System.Drawing.Point(126, 36);
             this.button12.Name = "button12";
             this.button12.Size = new System.Drawing.Size(61, 23);
             this.button12.TabIndex = 9;
@@ -342,7 +342,7 @@
             // 
             // button14
             // 
-            this.button14.Location = new System.Drawing.Point(73, 7);
+            this.button14.Location = new System.Drawing.Point(126, 7);
             this.button14.Name = "button14";
             this.button14.Size = new System.Drawing.Size(61, 23);
             this.button14.TabIndex = 7;
@@ -367,7 +367,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(140, 94);
+            this.tabPage3.Size = new System.Drawing.Size(193, 94);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Проецирование";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -375,7 +375,7 @@
             // radio_par
             // 
             this.radio_par.AutoSize = true;
-            this.radio_par.Location = new System.Drawing.Point(24, 48);
+            this.radio_par.Location = new System.Drawing.Point(49, 48);
             this.radio_par.Name = "radio_par";
             this.radio_par.Size = new System.Drawing.Size(99, 17);
             this.radio_par.TabIndex = 1;
@@ -388,7 +388,7 @@
             // 
             this.radio_center.AutoSize = true;
             this.radio_center.Checked = true;
-            this.radio_center.Location = new System.Drawing.Point(24, 25);
+            this.radio_center.Location = new System.Drawing.Point(49, 25);
             this.radio_center.Name = "radio_center";
             this.radio_center.Size = new System.Drawing.Size(92, 17);
             this.radio_center.TabIndex = 0;
@@ -403,18 +403,18 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(140, 94);
+            this.tabPage4.Size = new System.Drawing.Size(193, 94);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Масштабирование";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
             // zoom_val
             // 
-            this.zoom_val.Location = new System.Drawing.Point(29, 21);
+            this.zoom_val.Location = new System.Drawing.Point(6, 23);
             this.zoom_val.Maximum = 16;
             this.zoom_val.Minimum = 1;
             this.zoom_val.Name = "zoom_val";
-            this.zoom_val.Size = new System.Drawing.Size(82, 45);
+            this.zoom_val.Size = new System.Drawing.Size(181, 45);
             this.zoom_val.TabIndex = 2;
             this.zoom_val.TabStop = false;
             this.zoom_val.Value = 8;
@@ -426,7 +426,7 @@
             this.groupBox3.Controls.Add(this.wire_but);
             this.groupBox3.Controls.Add(this.raster_but);
             this.groupBox3.Controls.Add(this.start_render);
-            this.groupBox3.Location = new System.Drawing.Point(308, 518);
+            this.groupBox3.Location = new System.Drawing.Point(360, 518);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(143, 148);
             this.groupBox3.TabIndex = 12;
