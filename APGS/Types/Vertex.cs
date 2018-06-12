@@ -17,7 +17,23 @@ namespace ObjParser.Types
 
         public int Index { get; set; }
 
-		public void LoadFromStringArray(string[] data)
+        public Vertex(double x, double y, double z)
+        {
+            X = x;
+            Y = y;
+            Z = z;
+        }
+
+        public Vertex() {}
+
+        public Vertex(Matrix3D M)
+        {
+            X = M.M11;
+            Y = M.M21;
+            Z = M.M31;
+        }
+
+        public void LoadFromStringArray(string[] data)
         {
             if (data.Length < MinimumDataLength)
                 throw new ArgumentException("Input array must be of minimum length " + MinimumDataLength, "data");
@@ -82,6 +98,41 @@ namespace ObjParser.Types
                 Y = World.M22 + c1.Y,
                 Z = World.M33 + c1.Z
             };
+        }
+
+        public static double Normalize(Vertex p)
+        {
+            return Math.Sqrt(p.X * p.X + p.Y * p.Y + p.Z * p.Z);
+        }
+        public static Vertex normalize(Vertex p)
+        {
+            Vertex P = new Vertex();
+            if (p.X == 0 && p.Y == 0 && p.Z == 0)
+            {
+                P.X = 0;
+                P.Y = 0;
+                P.Z = 0;
+            }
+            else
+            {
+                P.X = p.X * (1 / Normalize(p));
+                P.Y = p.Y * (1 / Normalize(p));
+                P.Z = p.Z * (1 / Normalize(p));
+            }
+            return P;
+        }
+        public static Vertex operator ^(Vertex c1, Vertex c2)
+        {
+            return new Vertex { X = Math.Pow(c1.X, c2.X), Y = Math.Pow(c1.Y, c2.Y), Z = Math.Pow(c1.Z, c2.Z) };
+        }
+
+        public static Vertex CVertex(Vertex a, Vertex b)
+        {
+            Vertex A = new Vertex();
+            A.X = a.Y * b.Z - a.Z * b.Y;
+            A.Y = a.Z * b.X - a.X * b.Z;
+            A.Z = a.X * b.Y - a.Y * b.X;
+            return A;
         }
 
         public override string ToString()

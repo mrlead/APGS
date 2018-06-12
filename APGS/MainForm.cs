@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using ObjParser;
 using ObjParser.Types;
 using System.Windows.Media.Media3D;
+using System.Collections.Generic;
 
 namespace APGS
 {
@@ -19,29 +20,14 @@ namespace APGS
         //Общие объекты
         public static Bitmap picture;
         static int[] z_buff;
+        public int sword;
+        Matrix3D MView = Matrix3D.Identity;
+        List<Sword> swords;
         //Конец объявления общих объектов
-
-        //Объекты для преобразований
-        double x_angle = 0;
-        double y_angle = 0;
-        double z_angle = 0;
-        int proj = 0;
-        Matrix3D Zoom = Matrix3D.Identity;
-        Matrix3D Loc = Matrix3D.Identity;
-        Matrix3D rotate_x = Matrix3D.Identity;
-        Matrix3D rotate_y = Matrix3D.Identity;
-        Matrix3D rotate_z = Matrix3D.Identity;
-        //Конец объявления объектов преобразования
 
         public MainForm()
         {
             InitializeComponent();
-            Zoom.M11 = 1;
-            Zoom.M22 = 1;
-            Zoom.M33 = 1;
-            Loc.M11 = 0;
-            Loc.M22 = 0;
-            Loc.M33 = 0;
         }
 
         //Ссылка на объект для управления вне класса
