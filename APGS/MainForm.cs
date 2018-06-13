@@ -29,6 +29,8 @@ namespace APGS
         public MainForm()
         {
             InitializeComponent();
+            swords = new List<Sword>();
+            camera = new CameraManagment();
         }
 
         //Ссылка на объект для управления вне класса
@@ -138,14 +140,11 @@ namespace APGS
         {
             try
             {
-                Matrix3D World;
-                double rasterization = -1000;
-                double scaling = 1;
                 z_buffer_clear();
                 z_buffer_func();
                 clear_picture();
 
-                for(int q = 0; q < swords.Count; q++)
+                for (int q = 0; q < swords.Count; q++)
                 {
                     double rad_x = Math.PI * swords[q].x_angle / 180;
                     double rad_y = Math.PI * swords[q].y_angle / 180;
@@ -166,7 +165,11 @@ namespace APGS
                     swords[q].rotate_z.M21 = -Math.Sin(rad_z);
                     swords[q].rotate_z.M22 = Math.Cos(rad_z);
 
-                    for(int i = 0; i < swords[q].obj.FaceList.Count; i++)
+                    Matrix3D World;
+                    double rasterization = -1000;
+                    double scaling = 1;
+
+                    for (int i = 0; i < swords[q].obj.FaceList.Count; i++)
                     {
                         int[] face = swords[q].obj.FaceList[i].VertexIndexList;
 
@@ -188,7 +191,7 @@ namespace APGS
                         p3 = p3 + swords[q].Loc;
 
                         //Обработка камеры
-                        if(camera.create)
+                        if (camera.create)
                         {
                             create_camera(p1, p2, p3);
                             rasterization = camera.focus;
@@ -202,7 +205,7 @@ namespace APGS
                         }
 
                         //Обработка проекции
-                        if(swords[q].proj == 0)
+                        if (swords[q].proj == 0)
                         {
                             camera.c1.X /= (camera.c1.Z / (rasterization) + 1);
                             camera.c1.Y /= (camera.c1.Z / (rasterization) + 1);
@@ -225,17 +228,19 @@ namespace APGS
                         if (wire_but.Checked)
                         {
                             //проволочная модель
-                            line((int)(camera.c1.X), (int)(camera.c1.Y), (int)(camera.c2.X), (int)(camera.c2.Y), picture, System.Drawing.Color.Green);
-                            line((int)(camera.c2.X), (int)(camera.c2.Y), (int)(camera.c3.X), (int)(camera.c3.Y), picture, System.Drawing.Color.Green);
-                            line((int)(camera.c1.X), (int)(camera.c1.Y), (int)(camera.c3.X), (int)(camera.c3.Y), picture, System.Drawing.Color.Green);
+                            line((int)(camera.c1.X), (int)(camera.c1.Y), (int)(camera.c2.X), (int)(camera.c2.Y), picture, red);
+                            line((int)(camera.c2.X), (int)(camera.c2.Y), (int)(camera.c3.X), (int)(camera.c3.Y), picture, red);
+                            line((int)(camera.c1.X), (int)(camera.c1.Y), (int)(camera.c3.X), (int)(camera.c3.Y), picture, red);
                         }
                         else
                         {
                             //закрашенная модель
-                            triangle(camera.c1, camera.c2, camera.c3, picture, System.Drawing.Color.Green);
+                            triangle(camera.c1, camera.c2, camera.c3, picture, red);
                         }
                     }
                 }
+                    render.Image = picture;
+                    render.Image.RotateFlip(RotateFlipType.RotateNoneFlipY);
             }
             catch(Exception)
             {
@@ -767,6 +772,53 @@ namespace APGS
         private void button23_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void model_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            sword = model.SelectedIndex;
+        }
+
+        private void button30_Click(object sender, EventArgs e)
+        {
+            camera.RotateCamX(camera.Center - camera.Eye, false);
+            create_model();
+        }
+
+        private void button29_Click(object sender, EventArgs e)
+        {
+            camera.RotateCamX(camera.Center - camera.Eye, true);
+            create_model();
+        }
+
+        private void button28_Click(object sender, EventArgs e)
+        {
+            camera.RotateCamY(camera.Center - camera.Eye, false);
+            create_model();
+        }
+
+        private void button27_Click(object sender, EventArgs e)
+        {
+            camera.RotateCamY(camera.Center - camera.Eye, true);
+            create_model();
+        }
+
+        private void button26_Click(object sender, EventArgs e)
+        {
+            camera.RotateCamZ(camera.Center - camera.Eye, false);
+            create_model();
+        }
+
+        private void button25_Click(object sender, EventArgs e)
+        {
+            camera.RotateCamZ(camera.Center - camera.Eye, true);
+            create_model();
+        }
+
+        private void button24_Click(object sender, EventArgs e)
+        {
+            camera.MoveCameraX(camera.Center - camera.Eye, false);
+            create_model();
         }
     }
 }

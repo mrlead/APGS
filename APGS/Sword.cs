@@ -6,7 +6,6 @@ namespace APGS
     class Sword
     {
         public string path_model;
-
         public double x_angle = 0;
         public double y_angle = 0;
         public double z_angle = 0;
