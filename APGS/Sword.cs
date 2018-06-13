@@ -11,11 +11,11 @@ namespace APGS
         double y_angle = 0;
         double z_angle = 0;
         int proj = 0;
-        Matrix3D Zoom = Matrix3D.Identity;
-        Matrix3D Loc = Matrix3D.Identity;
-        Matrix3D rotate_x = Matrix3D.Identity;
-        Matrix3D rotate_y = Matrix3D.Identity;
-        Matrix3D rotate_z = Matrix3D.Identity;
+        public Matrix3D Zoom = Matrix3D.Identity;
+        public Matrix3D Loc = Matrix3D.Identity;
+        public Matrix3D rotate_x = Matrix3D.Identity;
+        public Matrix3D rotate_y = Matrix3D.Identity;
+        public Matrix3D rotate_z = Matrix3D.Identity;
         public Obj obj;
 
         public Sword(string path_model)

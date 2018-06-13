@@ -448,8 +448,11 @@ namespace APGS
 
         private void button4_Click(object sender, EventArgs e)
         {
-            Loc.M11 -= 2;
-            create_model();
+            if (swords.Count != 0)
+            {
+                swords[sword].Loc.M11 -= 1;
+                create_model();
+            }
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -562,6 +565,36 @@ namespace APGS
             z_center.Text = "";
             message(false, "Камера удалена");
             create_model();
+        }
+
+        private void x_eye_TextChanged(object sender, EventArgs e)
+        {
+            camera_data();
+        }
+
+        private void y_eye_TextChanged(object sender, EventArgs e)
+        {
+            camera_data();
+        }
+
+        private void z_eye_TextChanged(object sender, EventArgs e)
+        {
+            camera_data();
+        }
+
+        private void x_center_TextChanged(object sender, EventArgs e)
+        {
+            camera_data();
+        }
+
+        private void y_center_TextChanged(object sender, EventArgs e)
+        {
+            camera_data();
+        }
+
+        private void z_center_TextChanged(object sender, EventArgs e)
+        {
+            camera_data();
         }
     }
 }

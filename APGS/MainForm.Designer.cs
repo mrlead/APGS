@@ -664,7 +664,7 @@
             // 
             // button31
             // 
-            this.button31.Location = new System.Drawing.Point(7, 25);
+            this.button31.Location = new System.Drawing.Point(34, 25);
             this.button31.Name = "button31";
             this.button31.Size = new System.Drawing.Size(75, 23);
             this.button31.TabIndex = 19;
@@ -715,6 +715,7 @@
             this.x_center.Name = "x_center";
             this.x_center.Size = new System.Drawing.Size(79, 20);
             this.x_center.TabIndex = 105;
+            this.x_center.TextChanged += new System.EventHandler(this.x_center_TextChanged);
             // 
             // y_center
             // 
@@ -722,6 +723,7 @@
             this.y_center.Name = "y_center";
             this.y_center.Size = new System.Drawing.Size(79, 20);
             this.y_center.TabIndex = 106;
+            this.y_center.TextChanged += new System.EventHandler(this.y_center_TextChanged);
             // 
             // z_center
             // 
@@ -729,6 +731,7 @@
             this.z_center.Name = "z_center";
             this.z_center.Size = new System.Drawing.Size(79, 20);
             this.z_center.TabIndex = 107;
+            this.z_center.TextChanged += new System.EventHandler(this.z_center_TextChanged);
             // 
             // label21
             // 
@@ -781,6 +784,7 @@
             this.x_eye.Name = "x_eye";
             this.x_eye.Size = new System.Drawing.Size(79, 20);
             this.x_eye.TabIndex = 97;
+            this.x_eye.TextChanged += new System.EventHandler(this.x_eye_TextChanged);
             // 
             // y_eye
             // 
@@ -788,6 +792,7 @@
             this.y_eye.Name = "y_eye";
             this.y_eye.Size = new System.Drawing.Size(79, 20);
             this.y_eye.TabIndex = 98;
+            this.y_eye.TextChanged += new System.EventHandler(this.y_eye_TextChanged);
             // 
             // z_eye
             // 
@@ -795,6 +800,7 @@
             this.z_eye.Name = "z_eye";
             this.z_eye.Size = new System.Drawing.Size(79, 20);
             this.z_eye.TabIndex = 99;
+            this.z_eye.TextChanged += new System.EventHandler(this.z_eye_TextChanged);
             // 
             // MainForm
             // 
