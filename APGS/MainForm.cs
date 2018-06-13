@@ -521,12 +521,47 @@ namespace APGS
             {
                 camera = new CameraManagment();
                 camera.create = true;
+                camera.Eye.X = Double.Parse(x_eye.Text);
+                camera.Eye.Y = Double.Parse(y_eye.Text);
+                camera.Eye.Z = Double.Parse(z_eye.Text);
 
+                camera.Center.X = Double.Parse(x_center.Text);
+                camera.Center.Y = Double.Parse(y_center.Text);
+                camera.Center.Z = Double.Parse(z_center.Text);
+                message(true, "Камера создана");
+                create_model();
             }
             catch(Exception)
             {
-
+                message(false, "Ошибка при создании камеры");
             }
+        }
+
+        private void button31_Click(object sender, EventArgs e)
+        {
+            camera = new CameraManagment();
+            camera.create = true;
+            x_eye.Text = camera.Eye.X.ToString();
+            y_eye.Text = camera.Eye.Y.ToString();
+            z_eye.Text = camera.Eye.Z.ToString();
+            x_center.Text = camera.Center.X.ToString();
+            y_center.Text = camera.Center.Y.ToString();
+            z_center.Text = camera.Center.Z.ToString();
+            message(true, "Камера создана");
+            create_model();
+        }
+
+        private void button32_Click(object sender, EventArgs e)
+        {
+            camera.create = false;
+            x_eye.Text = "";
+            y_eye.Text = "";
+            z_eye.Text = "";
+            x_center.Text = "";
+            y_center.Text = "";
+            z_center.Text = "";
+            message(false, "Камера удалена");
+            create_model();
         }
     }
 }

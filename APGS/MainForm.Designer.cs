@@ -670,6 +670,7 @@
             this.button31.TabIndex = 19;
             this.button31.Text = "Добавить";
             this.button31.UseVisualStyleBackColor = true;
+            this.button31.Click += new System.EventHandler(this.button31_Click);
             // 
             // button32
             // 
@@ -679,6 +680,7 @@
             this.button32.TabIndex = 20;
             this.button32.Text = "Удалить";
             this.button32.UseVisualStyleBackColor = true;
+            this.button32.Click += new System.EventHandler(this.button32_Click);
             // 
             // label26
             // 
