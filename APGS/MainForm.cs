@@ -23,6 +23,7 @@ namespace APGS
         public int sword;
         Matrix3D MView = Matrix3D.Identity;
         List<Sword> swords;
+        CameraManagment camera;
         //Конец объявления общих объектов
 
         public MainForm()
@@ -97,6 +98,32 @@ namespace APGS
                 alarma_lbl.BackColor = System.Drawing.Color.Red;
                 alarma_lbl.Text = s;
             }
+        }
+
+        public Matrix3D Lookat(Vertex Eye, Vertex Center, Vertex Up)
+        {
+            Vertex CameraDirection = Vertex.normalize(Eye - Center);
+            Vertex cameraRight = Vertex.normalize(Vertex.CVertex(Up, CameraDirection));
+            Vertex cameraUp = Vertex.normalize(Vertex.CVertex(CameraDirection, cameraRight));
+            Matrix3D MinV = Matrix3D.Identity;
+            Matrix3D tr = Matrix3D.Identity;
+
+            MinV.M11 = cameraRight.X;
+            MinV.M21 = cameraUp.X;
+            MinV.M31 = CameraDirection.X;
+            tr.M14 = -Eye.X;
+
+            MinV.M12 = cameraRight.Y;
+            MinV.M22 = cameraUp.Y;
+            MinV.M32 = CameraDirection.Y;
+            tr.M24 = -Eye.Y;
+
+            MinV.M13 = cameraRight.Z;
+            MinV.M23 = cameraUp.Z;
+            MinV.M33 = CameraDirection.Z;
+            tr.M34 = -Eye.Z;
+
+            return MinV * tr;
         }
 
         //создание модели проволка/полная

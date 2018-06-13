@@ -62,6 +62,8 @@
             this.zoom_val = new System.Windows.Forms.TrackBar();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.button17 = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.model = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.render)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -94,7 +96,7 @@
             // start_render
             // 
             this.start_render.Enabled = false;
-            this.start_render.Location = new System.Drawing.Point(34, 86);
+            this.start_render.Location = new System.Drawing.Point(34, 112);
             this.start_render.Name = "start_render";
             this.start_render.Size = new System.Drawing.Size(75, 23);
             this.start_render.TabIndex = 2;
@@ -106,7 +108,7 @@
             // 
             this.wire_but.AutoSize = true;
             this.wire_but.Checked = true;
-            this.wire_but.Location = new System.Drawing.Point(6, 32);
+            this.wire_but.Location = new System.Drawing.Point(4, 41);
             this.wire_but.Name = "wire_but";
             this.wire_but.Size = new System.Drawing.Size(133, 17);
             this.wire_but.TabIndex = 3;
@@ -117,7 +119,7 @@
             // raster_but
             // 
             this.raster_but.AutoSize = true;
-            this.raster_but.Location = new System.Drawing.Point(6, 62);
+            this.raster_but.Location = new System.Drawing.Point(6, 75);
             this.raster_but.Name = "raster_but";
             this.raster_but.Size = new System.Drawing.Size(135, 17);
             this.raster_but.TabIndex = 4;
@@ -128,7 +130,7 @@
             // alarma_lbl
             // 
             this.alarma_lbl.AutoSize = true;
-            this.alarma_lbl.Location = new System.Drawing.Point(15, 669);
+            this.alarma_lbl.Location = new System.Drawing.Point(15, 685);
             this.alarma_lbl.Name = "alarma_lbl";
             this.alarma_lbl.Size = new System.Drawing.Size(0, 13);
             this.alarma_lbl.TabIndex = 5;
@@ -428,14 +430,14 @@
             this.groupBox3.Controls.Add(this.start_render);
             this.groupBox3.Location = new System.Drawing.Point(360, 518);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(143, 148);
+            this.groupBox3.Size = new System.Drawing.Size(143, 188);
             this.groupBox3.TabIndex = 12;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Отрисовка";
             // 
             // button17
             // 
-            this.button17.Location = new System.Drawing.Point(6, 115);
+            this.button17.Location = new System.Drawing.Point(7, 146);
             this.button17.Name = "button17";
             this.button17.Size = new System.Drawing.Size(132, 23);
             this.button17.TabIndex = 5;
@@ -443,11 +445,30 @@
             this.button17.UseVisualStyleBackColor = true;
             this.button17.Click += new System.EventHandler(this.button17_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(224, 669);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(45, 13);
+            this.label1.TabIndex = 13;
+            this.label1.Text = "Объект";
+            // 
+            // model
+            // 
+            this.model.FormattingEnabled = true;
+            this.model.Location = new System.Drawing.Point(140, 685);
+            this.model.Name = "model";
+            this.model.Size = new System.Drawing.Size(214, 21);
+            this.model.TabIndex = 14;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1025, 687);
+            this.ClientSize = new System.Drawing.Size(1025, 714);
+            this.Controls.Add(this.model);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -510,6 +531,8 @@
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.TrackBar zoom_val;
         private System.Windows.Forms.Button button17;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox model;
     }
 }
 
