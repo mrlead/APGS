@@ -589,6 +589,7 @@
             this.button23.TabIndex = 7;
             this.button23.Text = "X ->";
             this.button23.UseVisualStyleBackColor = true;
+            this.button23.Click += new System.EventHandler(this.button23_Click);
             // 
             // button24
             // 

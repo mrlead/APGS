@@ -392,58 +392,121 @@ namespace APGS
 
         private void radio_center_Click(object sender, EventArgs e)
         {
-            proj = 0;
-            create_model();
+            if (swords.Count != 0)
+            {
+                swords[sword].proj = 1;
+                create_model();
+            }
+            else
+            {
+                MessageBox.Show("Создайте модель!");
+            }
         }
 
         private void radio_par_CheckedChanged(object sender, EventArgs e)
         {
-            proj = 1;
-            create_model();
+            if (swords.Count != 0)
+            {
+                swords[sword].proj = 0;
+                create_model();
+            }
+            else
+            {
+                MessageBox.Show("Создайте модель!");
+            }
         }
 
         private void zoom_val_Scroll(object sender, EventArgs e)
         {
-            Zoom.M11 = zoom_val.Value / 10.0;
-            Zoom.M22 = zoom_val.Value / 10.0;
-            Zoom.M33 = zoom_val.Value / 10.0;
-            create_model();
+            if (swords.Count != 0)
+            {
+                swords[sword].Zoom.M11 = zoom_val.Value / 10.0;
+                swords[sword].Zoom.M22 = zoom_val.Value / 10.0;
+                swords[sword].Zoom.M33 = zoom_val.Value / 10.0;
+                create_model();
+            }
+            else
+            {
+                MessageBox.Show("Создайте модель!");
+            }
         }
 
         private void button15_Click(object sender, EventArgs e)
         {
-            x_angle += 1;
-            create_model();
+            if (swords.Count != 0)
+            {
+                swords[sword].x_angle += 1;
+                create_model();
+            }
+            else
+            {
+                MessageBox.Show("Создайте модель!");
+            }
         }
 
         private void button14_Click(object sender, EventArgs e)
         {
-            x_angle -= 1;
-            create_model();
+            if (swords.Count != 0)
+            {
+                swords[sword].x_angle -= 1;
+                create_model();
+            }
+            else
+            {
+                MessageBox.Show("Создайте модель!");
+            }
         }
 
         private void button13_Click(object sender, EventArgs e)
         {
-            y_angle += 1;
-            create_model();
+            if (swords.Count != 0)
+            {
+                swords[sword].y_angle += 1;
+                create_model();
+            }
+            else
+            {
+                MessageBox.Show("Создайте модель!");
+            }
         }
 
         private void button12_Click(object sender, EventArgs e)
         {
-            y_angle -= 1;
-            create_model();
+            if (swords.Count != 0)
+            {
+                swords[sword].y_angle -= 1;
+                create_model();
+            }
+            else
+            {
+                MessageBox.Show("Создайте модель!");
+            }
         }
 
         private void button11_Click(object sender, EventArgs e)
         {
-            z_angle += 1;
-            create_model();
+            if (swords.Count != 0)
+            {
+                swords[sword].z_angle += 1;
+                create_model();
+            }
+            else
+            {
+                MessageBox.Show("Создайте модель!");
+            }
         }
 
         private void button10_Click(object sender, EventArgs e)
         {
-            z_angle -= 1;
-            create_model();
+            if (swords.Count != 0)
+            {
+                swords[sword].z_angle -= 1;
+                create_model();
+            }
+            else
+            {
+                MessageBox.Show("Создайте модель!");
+            }
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -453,50 +516,96 @@ namespace APGS
                 swords[sword].Loc.M11 -= 1;
                 create_model();
             }
+            else
+            {
+                MessageBox.Show("Создайте модель!");
+            }
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            Loc.M11 += 2;
-            create_model();
+            if (swords.Count != 0)
+            {
+                swords[sword].Loc.M11 += 1;
+                create_model();
+            }
+            else
+            {
+                MessageBox.Show("Создайте модель!");
+            }
         }
 
         private void button7_Click(object sender, EventArgs e)
         {
-            Loc.M22 -= 2;
-            create_model();
+            if (swords.Count != 0)
+            {
+                swords[sword].Loc.M22 -= 1;
+                create_model();
+            }
+            else
+            {
+                MessageBox.Show("Создайте модель!");
+            }
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
-            Loc.M22 += 2;
-            create_model();
+            if (swords.Count != 0)
+            {
+                swords[sword].Loc.M22 += 1;
+                create_model();
+            }
+            else
+            {
+                MessageBox.Show("Создайте модель!");
+            }
         }
 
         private void button9_Click(object sender, EventArgs e)
         {
-            Loc.M33 -= 2;
-            create_model();
+            if (swords.Count != 0)
+            {
+                swords[sword].Loc.M33 -= 1;
+                create_model();
+            }
+            else
+            {
+                MessageBox.Show("Создайте модель!");
+            }
         }
 
         private void button8_Click(object sender, EventArgs e)
         {
-            Loc.M33 += 2;
-            create_model();
+            if (swords.Count != 0)
+            {
+                swords[sword].Loc.M33 += 1;
+                create_model();
+            }
+            else
+            {
+                MessageBox.Show("Создайте модель!");
+            }
         }
 
         private void button17_Click(object sender, EventArgs e)
         {
-            Zoom.M11 = 1;
-            Zoom.M22 = 1;
-            Zoom.M33 = 1;
-            Loc.M11 = 0;
-            Loc.M22 = 0;
-            Loc.M33 = 0;
-            x_angle = 0;
-            y_angle = 0;
-            z_angle = 0;
-            create_model();
+            if (swords.Count != 0)
+            {
+                swords[sword].Zoom.M11 = 1;
+                swords[sword].Zoom.M22 = 1;
+                swords[sword].Zoom.M33 = 1;
+                swords[sword].Loc.M11 = 1;
+                swords[sword].Loc.M22 = 1;
+                swords[sword].Loc.M33 = 1;
+                swords[sword].x_angle = 0;
+                swords[sword].y_angle = 0;
+                swords[sword].z_angle = 0;
+                create_model();
+            }
+            else
+            {
+                MessageBox.Show("Создайте модель!");
+            }
         }
 
         private void button18_Click(object sender, EventArgs e)
@@ -536,7 +645,7 @@ namespace APGS
             }
             catch(Exception)
             {
-                message(false, "Ошибка при создании камеры");
+                message(false, "Ошибка при изменении камеры");
             }
         }
 
@@ -595,6 +704,11 @@ namespace APGS
         private void z_center_TextChanged(object sender, EventArgs e)
         {
             camera_data();
+        }
+
+        private void button23_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

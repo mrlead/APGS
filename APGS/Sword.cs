@@ -7,10 +7,10 @@ namespace APGS
     {
         public string path_model;
 
-        double x_angle = 0;
-        double y_angle = 0;
-        double z_angle = 0;
-        int proj = 0;
+        public double x_angle = 0;
+        public double y_angle = 0;
+        public double z_angle = 0;
+        public int proj = 0;
         public Matrix3D Zoom = Matrix3D.Identity;
         public Matrix3D Loc = Matrix3D.Identity;
         public Matrix3D rotate_x = Matrix3D.Identity;
