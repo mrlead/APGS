@@ -80,6 +80,13 @@ namespace APGS
         //Запуск отрисовки
         private void start_render_Click(object sender, EventArgs e)
         {
+            swords.Add(new Sword("../../test_model/main.obj"));
+            model.Items.Clear();
+            for(int s = 0; s < swords.Count; s++)
+            {
+                model.Items.Add("Клеймор_" + s.ToString());
+            }
+            model.SelectedIndex = sword;
             z_buffer_func();
             clear_picture();
             create_model();
@@ -487,6 +494,39 @@ namespace APGS
             y_angle = 0;
             z_angle = 0;
             create_model();
+        }
+
+        private void button18_Click(object sender, EventArgs e)
+        {
+            model.Items.Clear();
+            swords.RemoveAt(sword);
+            for (int i = 0; i < swords.Count; i++)
+            {
+                model.Items.Add("object " + i.ToString());
+            }
+            if (model.Items.Count != 0)
+            {
+                model.SelectedIndex = 0;
+                create_model();
+            }
+            else
+            {
+                clear_picture();
+            }
+        }
+
+        public void camera_data()
+        {
+            try
+            {
+                camera = new CameraManagment();
+                camera.create = true;
+
+            }
+            catch(Exception)
+            {
+
+            }
         }
     }
 }
