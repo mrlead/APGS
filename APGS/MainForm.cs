@@ -134,7 +134,7 @@ namespace APGS
         }
 
         //создание модели проволка/полная
-        public void create_model()
+        /*public void create_model()
         {
             var obj = new Obj();
             obj.LoadObj("../../test_model/main.obj");
@@ -263,6 +263,194 @@ namespace APGS
                 render.Image = picture;
                 picture.RotateFlip(RotateFlipType.RotateNoneFlipY);
             }
+        }*/
+        public void create_model()
+        {
+            try
+            {
+                Matrix3D World;
+                double rasterization = -1000;
+                double scaling = 1;
+                z_buffer_clear();
+                z_buffer_func();
+                clear_picture();
+
+                for(int q = 0; q < swords.Count; q++)
+                {
+                    double rad_x = Math.PI * swords[q].x_angle / 180;
+                    double rad_y = Math.PI * swords[q].y_angle / 180;
+                    double rad_z = Math.PI * swords[q].z_angle / 180;
+
+                    swords[q].rotate_x.M22 = Math.Cos(rad_x);
+                    swords[q].rotate_x.M23 = Math.Sin(rad_x);
+                    swords[q].rotate_x.M32 = -Math.Sin(rad_x);
+                    swords[q].rotate_x.M33 = Math.Cos(rad_x);
+
+                    swords[q].rotate_y.M11 = Math.Cos(rad_y);
+                    swords[q].rotate_y.M13 = -Math.Sin(rad_y);
+                    swords[q].rotate_y.M31 = Math.Sin(rad_y);
+                    swords[q].rotate_y.M33 = Math.Cos(rad_y);
+
+                    swords[q].rotate_z.M11 = Math.Cos(rad_z);
+                    swords[q].rotate_z.M12 = Math.Sin(rad_z);
+                    swords[q].rotate_z.M21 = -Math.Sin(rad_z);
+                    swords[q].rotate_z.M22 = Math.Cos(rad_z);
+
+                    for(int i = 0; i < swords[q].obj.FaceList.Count; i++)
+                    {
+                        int[] face = swords[q].obj.FaceList[i].VertexIndexList;
+
+                        Vertex p1 = new Vertex();
+                        Vertex p2 = new Vertex();
+                        Vertex p3 = new Vertex();
+
+                        p1 = swords[q].obj.VertexList[face[0]];
+                        p2 = swords[q].obj.VertexList[face[1]];
+                        p3 = swords[q].obj.VertexList[face[2]];
+
+                        World = swords[q].Zoom * swords[q].rotate_x * swords[q].rotate_y * swords[q].rotate_z;
+
+                        p1 = p1 * World;
+                        p2 = p2 * World;
+                        p3 = p3 * World;
+                        p1 = p1 + swords[q].Loc;
+                        p2 = p2 + swords[q].Loc;
+                        p3 = p3 + swords[q].Loc;
+
+                        //Обработка камеры
+                        if(camera.create)
+                        {
+                            create_camera(p1, p2, p3);
+                            rasterization = camera.focus;
+                            scaling = camera.scale * 1.1;
+                        }
+                        else
+                        {
+                            camera.c1 = p1;
+                            camera.c2 = p2;
+                            camera.c3 = p3;
+                        }
+
+                        //Обработка проекции
+                        if(swords[q].proj == 0)
+                        {
+                            camera.c1.X /= (camera.c1.Z / (rasterization) + 1);
+                            camera.c1.Y /= (camera.c1.Z / (rasterization) + 1);
+                            camera.c2.X /= (camera.c2.Z / (rasterization) + 1);
+                            camera.c2.Y /= (camera.c2.Z / (rasterization) + 1);
+                            camera.c3.X /= (camera.c3.Z / (rasterization) + 1);
+                            camera.c3.Y /= (camera.c3.Z / (rasterization) + 1);
+                        }
+
+                        camera.c1.X *= scaling;
+                        camera.c1.Y *= scaling;
+                        camera.c1.Z *= scaling;
+                        camera.c2.X *= scaling;
+                        camera.c2.Y *= scaling;
+                        camera.c2.Z *= scaling;
+                        camera.c3.X *= scaling;
+                        camera.c3.Y *= scaling;
+                        camera.c3.Z *= scaling;
+
+                        if (wire_but.Checked)
+                        {
+                            //проволочная модель
+                            line((int)(camera.c1.X), (int)(camera.c1.Y), (int)(camera.c2.X), (int)(camera.c2.Y), picture, System.Drawing.Color.Green);
+                            line((int)(camera.c2.X), (int)(camera.c2.Y), (int)(camera.c3.X), (int)(camera.c3.Y), picture, System.Drawing.Color.Green);
+                            line((int)(camera.c1.X), (int)(camera.c1.Y), (int)(camera.c3.X), (int)(camera.c3.Y), picture, System.Drawing.Color.Green);
+                        }
+                        else
+                        {
+                            //закрашенная модель
+                            triangle(camera.c1, camera.c2, camera.c3, picture, System.Drawing.Color.Green);
+                        }
+                    }
+                }
+            }
+            catch(Exception)
+            {
+                message(false, "Ошибка создания модели");
+            }
+        }
+
+        public void create_camera(Vertex v1, Vertex v2, Vertex v3)
+        {
+            List<Matrix3D> MS = new List<Matrix3D>(3);
+
+            Matrix3D coords1 = new Matrix3D();
+            coords1.M11 = v1.X;
+            coords1.M12 = 1;
+            coords1.M13 = 1;
+            coords1.M14 = 1;
+
+            coords1.M21 = v1.Y;
+            coords1.M22 = 1;
+            coords1.M23 = 1;
+            coords1.M24 = 1;
+
+            coords1.M31 = v1.Z;
+            coords1.M32 = 1;
+            coords1.M33 = 1;
+            coords1.M34 = 1;
+
+            coords1.OffsetX = 1;
+            coords1.OffsetY = 1;
+            coords1.OffsetZ = 1;
+            coords1.M44 = 1;
+
+            MS.Add(coords1);
+
+            coords1 = new Matrix3D();
+            coords1.M11 = v2.X;
+            coords1.M12 = 1;
+            coords1.M13 = 1;
+            coords1.M14 = 1;
+
+            coords1.M21 = v2.Y;
+            coords1.M22 = 1;
+            coords1.M23 = 1;
+            coords1.M24 = 1;
+
+
+            coords1.M31 = v2.Z;
+            coords1.M32 = 1;
+            coords1.M33 = 1;
+            coords1.M34 = 1;
+
+            coords1.OffsetX = 1;
+            coords1.OffsetY = 1;
+            coords1.OffsetZ = 1;
+            coords1.M44 = 1;
+
+            MS.Add(coords1);
+
+            coords1 = new Matrix3D();
+            coords1.M11 = v3.X;
+            coords1.M12 = 1;
+            coords1.M13 = 1;
+            coords1.M14 = 1;
+
+            coords1.M21 = v3.Y;
+            coords1.M22 = 1;
+            coords1.M23 = 1;
+            coords1.M24 = 1;
+
+            coords1.M31 = v3.Z;
+            coords1.M32 = 1;
+            coords1.M33 = 1;
+            coords1.M34 = 1;
+
+            coords1.OffsetX = 1;
+            coords1.OffsetY = 1;
+            coords1.OffsetZ = 1;
+            coords1.M44 = 1;
+
+            MS.Add(coords1);
+
+            MView = Lookat(camera.Eye, camera.Center, camera.Up);
+            camera.c1 = new Vertex(MView * MS[0]);
+            camera.c2 = new Vertex(MView * MS[1]);
+            camera.c3 = new Vertex(MView * MS[2]);
         }
 
         //Отрисовка треуольников + растеризация
