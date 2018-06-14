@@ -27,6 +27,13 @@ namespace APGS
         Matrix3D MView = Matrix3D.Identity;
         List<Sword> swords;
         CameraManagment camera;
+
+        int width = 0;
+        int height = 0;
+        int x_e = 0, y_e = 0, z_e = 0;
+        int x_c = 0, y_c = 0, z_c = 0;
+        int rend = 0;
+        int b_r = 0, b_g = 0, b_b = 0;
         //Конец объявления общих объектов
 
         public MainForm()
@@ -83,20 +90,25 @@ namespace APGS
             Array.Clear(z_buff, 0, z_buff.Length);
         }
 
-        //Запуск отрисовки
-        private void start_render_Click(object sender, EventArgs e)
+        public void Rend()
         {
             swords.Add(new Sword("../../test_model/star.obj"));
             model.Items.Clear();
-            for(int s = 0; s < swords.Count; s++)
+            for (int s = 0; s < swords.Count; s++)
             {
-                model.Items.Add("Клеймор_" + s.ToString());
+                model.Items.Add("Object_" + s.ToString());
+                swords[s].name = name_sword.Text + s.ToString();
             }
-
             model.SelectedIndex = sword;
             z_buffer_func();
             clear_picture();
             create_model();
+        }
+
+        //Запуск отрисовки
+        private void start_render_Click(object sender, EventArgs e)
+        {
+            Rend();
         }
 
         //Функция вывода сообщений в статус бар
@@ -461,7 +473,9 @@ namespace APGS
             aFile.Seek(0, SeekOrigin.End);
             sw.WriteLine("width " + render.Width);
             sw.WriteLine("height " + render.Height);
-            sw.WriteLine("background " + render.BackColor);
+            sw.WriteLine("b_r " + render.BackColor.R);
+            sw.WriteLine("b_g " + render.BackColor.G);
+            sw.WriteLine("b_b " + render.BackColor.B);
             sw.WriteLine("x_eye " + x_eye.Text);
             sw.WriteLine("y_eye " + y_eye.Text);
             sw.WriteLine("z_eye " + z_eye.Text);
@@ -472,11 +486,12 @@ namespace APGS
             sw.WriteLine(" ");
             for(int j = 0; j < swords.Count; j++)
             {
+                sw.WriteLine("nameobject " + swords[j].name);
                 for (int i = 0; i < swords[j].obj.VertexList.Count; i++)
                     sw.WriteLine("v " + Convert.ToString(swords[j].obj.VertexList[i].X, CultureInfo.InvariantCulture) + " " + Convert.ToString(swords[j].obj.VertexList[i].Y, CultureInfo.InvariantCulture) + " " + Convert.ToString(swords[j].obj.VertexList[i].Z, CultureInfo.InvariantCulture));
                 sw.WriteLine(" ");
                 for (int i = 0; i < swords[j].obj.FaceList.Count; i++)
-                    sw.WriteLine("f " + swords[j].obj.FaceList[i].VertexIndexList[0] + " " + swords[j].obj.FaceList[i].VertexIndexList[1] + " " + swords[j].obj.FaceList[i].VertexIndexList[2] + " ");
+                    sw.WriteLine("f " + swords[j].obj.FaceList[i].VertexIndexList[0] + " " + swords[j].obj.FaceList[i].VertexIndexList[1] + " " + swords[j].obj.FaceList[i].VertexIndexList[2]);
                 sw.WriteLine(" ");
             }
         }
@@ -499,6 +514,7 @@ namespace APGS
             if (OFD.ShowDialog() == DialogResult.OK)
             {
                 LoadString(File.ReadAllLines(OFD.FileName));
+                scene_managment(width, height, System.Drawing.Color.FromArgb(b_r, b_g, b_b));
                 message(true, "Сцена загруженна");
             }
             else
@@ -518,12 +534,7 @@ namespace APGS
         public void readLine(string line)
         {
             string[] parts = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            int width = 0;
-            int height = 0;
-            int x_e = 0, y_e = 0, z_e = 0;
-            int x_c = 0, y_c = 0, z_c = 0;
-            int rend = 0;
-            System.Drawing.Color back_color = System.Drawing.Color.Red;
+            
             if (parts.Length > 0)
             {
                 switch (parts[0])
@@ -534,8 +545,14 @@ namespace APGS
                     case "height":
                         height = Convert.ToInt32(parts[1]);
                         break;
-                    case "background":
-                        back_color = System.Drawing.Color.FromName(parts[1]);
+                    case "b_r":
+                        b_r = Convert.ToInt32(parts[1]);
+                        break;
+                    case "b_g":
+                        b_g = Convert.ToInt32(parts[1]);
+                        break;
+                    case "b_b":
+                        b_b = Convert.ToInt32(parts[1]);
                         break;
                     case "x_eye":
                         x_e = Convert.ToInt32(parts[1]);
@@ -569,8 +586,8 @@ namespace APGS
                         swords[swords.Count - 1].obj.FaceList.Add(f);
                         break;
                 }
-                scene_managment(width, height, back_color);
             }
+            
         }
 
         private void radio_center_Click(object sender, EventArgs e)

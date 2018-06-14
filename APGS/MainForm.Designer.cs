@@ -95,6 +95,7 @@
             this.button23 = new System.Windows.Forms.Button();
             this.button24 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.name_sword = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.render)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -140,7 +141,7 @@
             // 
             this.wire_but.AutoSize = true;
             this.wire_but.Checked = true;
-            this.wire_but.Location = new System.Drawing.Point(4, 41);
+            this.wire_but.Location = new System.Drawing.Point(4, 19);
             this.wire_but.Name = "wire_but";
             this.wire_but.Size = new System.Drawing.Size(133, 17);
             this.wire_but.TabIndex = 3;
@@ -151,7 +152,7 @@
             // raster_but
             // 
             this.raster_but.AutoSize = true;
-            this.raster_but.Location = new System.Drawing.Point(3, 64);
+            this.raster_but.Location = new System.Drawing.Point(2, 42);
             this.raster_but.Name = "raster_but";
             this.raster_but.Size = new System.Drawing.Size(135, 17);
             this.raster_but.TabIndex = 4;
@@ -466,6 +467,7 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.name_sword);
             this.groupBox3.Controls.Add(this.button18);
             this.groupBox3.Controls.Add(this.button17);
             this.groupBox3.Controls.Add(this.wire_but);
@@ -815,6 +817,13 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Перемещение";
             // 
+            // name_sword
+            // 
+            this.name_sword.Location = new System.Drawing.Point(6, 70);
+            this.name_sword.Name = "name_sword";
+            this.name_sword.Size = new System.Drawing.Size(131, 20);
+            this.name_sword.TabIndex = 7;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -918,6 +927,7 @@
         private System.Windows.Forms.TextBox z_eye;
         private System.Windows.Forms.Button button32;
         private System.Windows.Forms.Button button31;
+        private System.Windows.Forms.TextBox name_sword;
     }
 }
 

@@ -6,6 +6,7 @@ namespace APGS
     class Sword
     {
         public string path_model;
+        public string name;
         public double x_angle = 0;
         public double y_angle = 0;
         public double z_angle = 0;
@@ -26,6 +27,7 @@ namespace APGS
             Loc.M22 = 0;
             Loc.M33 = 0;
             this.path_model = path_model;
+            name = "";
             obj = new Obj();
             obj.LoadObj(path_model);
         }
