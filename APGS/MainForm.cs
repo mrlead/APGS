@@ -92,7 +92,7 @@ namespace APGS
 
         public void Rend()
         {
-            swords.Add(new Sword("../../test_model/star.obj"));
+            swords.Add(new Sword("../../test_model/sword_1.obj"));
             model.Items.Clear();
             for (int s = 0; s < swords.Count; s++)
             {
@@ -350,7 +350,16 @@ namespace APGS
 
         //Отрисовка треуольников + растеризация
         public void triangle(Vertex t0, Vertex t1, Vertex t2, Bitmap bitmap, System.Drawing.Color color)
-        { 
+        {
+            t0.X += 250;
+            t0.Y += 250;
+            t0.Z += 250;
+            t1.X += 250;
+            t1.Y += 250;
+            t1.Z += 250;
+            t2.X += 250;
+            t2.Y += 250;
+            t2.Z += 250;
             try
             { 
                 if (t0.Y == t1.Y && t0.Y == t2.Y) return;
@@ -379,11 +388,29 @@ namespace APGS
                         Vertex C = new Vertex();
                         C = A + (B - A) * phi;
                         int idx = ((int)C.X + (int)C.Y * render.Width);
+
+                        //Свет в конце тоннеля
+                        int r = color.R - (int)C.Z + 250;
+                        int g = color.G - (int)C.Z + 250;
+                        int b = color.B - (int)C.Z + 250;
+                        if (r < color.R - 100) r = color.R - 100;
+                        if (g < color.G - 100) g = color.G - 100;
+                        if (b < color.B - 100) b = color.B - 100;
+                        if (r < 0) r = 0;
+                        if (g < 0) g = 0;
+                        if (b < 0) b = 0;
+                        if (r > color.R + 10) r = color.R + 10;
+                        if (g > color.G + 10) g = color.G + 10;
+                        if (b > color.B + 10) b = color.B + 10;
+                        if (r > 255) r = 255;
+                        if (g > 255) g = 255;
+                        if (b > 255) b = 255;
+
                         if ((int)C.X >= render.Width || (int)C.Y >= render.Height || (int)C.X < 0) continue;
                         if (z_buff[idx] < (int)C.Z)
                         {
                             z_buff[idx] = (int)C.Z;
-                            bitmap.SetPixel((int)C.X, (int)C.Y, color);
+                            bitmap.SetPixel((int)C.X, (int)C.Y, System.Drawing.Color.FromArgb(255, r, g, b));
                         }
                     }
                 }
