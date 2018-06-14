@@ -8,7 +8,6 @@ namespace APGS
     {
         public Color color;
         public int width, height;
-
         MainForm form;
 
         public SceneBuilder(MainForm form)

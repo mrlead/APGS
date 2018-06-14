@@ -1,12 +1,11 @@
-﻿using System;
-using System.Drawing;
-using System.Windows.Forms;
-using ObjParser;
-using ObjParser.Types;
-using System.Windows.Media.Media3D;
+﻿using ObjParser.Types;
+using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Drawing;
 using System.Globalization;
+using System.IO;
+using System.Windows.Forms;
+using System.Windows.Media.Media3D;
 
 namespace APGS
 {
