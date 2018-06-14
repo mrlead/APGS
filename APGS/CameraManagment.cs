@@ -153,38 +153,5 @@ namespace APGS
                 Up.Z -= Math.Sin(rad);
             }
         }
-
-        public void MoveCameraXPan(Vertex cameraFront, bool R)
-        {
-            if (R == true)
-            {
-                Eye.X -= Vertex.normalize(Vertex.CVertex(cameraFront, Up)).X * speed;
-                Eye.Y -= Vertex.normalize(Vertex.CVertex(cameraFront, Up)).Y * speed;
-                Eye.Z -= Vertex.normalize(Vertex.CVertex(cameraFront, Up)).Z * speed;
-            }
-            else
-            {
-                Eye.X += Vertex.normalize(Vertex.CVertex(cameraFront, Up)).X * speed;
-                Eye.Y += Vertex.normalize(Vertex.CVertex(cameraFront, Up)).Y * speed;
-                Eye.Z += Vertex.normalize(Vertex.CVertex(cameraFront, Up)).Z * speed;
-
-            }
-        }
-
-        public void MoveCameraYPan(bool W)
-        {
-            if (W == true)
-            {
-                Eye.X += speed * Up.X;
-                Eye.Y += speed * Up.Y;
-                Eye.Z += speed * Up.Z;
-            }
-            else
-            {
-                Eye.X -= speed * Up.X;
-                Eye.Y -= speed * Up.Y;
-                Eye.Z -= speed * Up.Z;
-            }
-        }
     }
 }

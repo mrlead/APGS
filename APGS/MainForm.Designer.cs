@@ -754,6 +754,7 @@
             this.button19.TabIndex = 11;
             this.button19.Text = "Z ->";
             this.button19.UseVisualStyleBackColor = true;
+            this.button19.Click += new System.EventHandler(this.button19_Click);
             // 
             // button20
             // 
@@ -763,6 +764,7 @@
             this.button20.TabIndex = 10;
             this.button20.Text = "<- Z";
             this.button20.UseVisualStyleBackColor = true;
+            this.button20.Click += new System.EventHandler(this.button20_Click);
             // 
             // button21
             // 
@@ -772,6 +774,7 @@
             this.button21.TabIndex = 9;
             this.button21.Text = "Y ->";
             this.button21.UseVisualStyleBackColor = true;
+            this.button21.Click += new System.EventHandler(this.button21_Click);
             // 
             // button22
             // 
@@ -781,6 +784,7 @@
             this.button22.TabIndex = 8;
             this.button22.Text = "<- Y";
             this.button22.UseVisualStyleBackColor = true;
+            this.button22.Click += new System.EventHandler(this.button22_Click);
             // 
             // button23
             // 

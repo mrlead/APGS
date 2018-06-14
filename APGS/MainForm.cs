@@ -5,6 +5,8 @@ using ObjParser;
 using ObjParser.Types;
 using System.Windows.Media.Media3D;
 using System.Collections.Generic;
+using System.IO;
+using System.Globalization;
 
 namespace APGS
 {
@@ -21,6 +23,7 @@ namespace APGS
         public static Bitmap picture;
         static int[] z_buff;
         public int sword;
+        int rendering;
         Matrix3D MView = Matrix3D.Identity;
         List<Sword> swords;
         CameraManagment camera;
@@ -47,6 +50,7 @@ namespace APGS
             render.BackColor = background;
             picture = new Bitmap(width, height);
             start_render.Enabled = true;
+            message(true, "Сцена создана");
         }
 
         //Очистка bitmap
@@ -82,12 +86,13 @@ namespace APGS
         //Запуск отрисовки
         private void start_render_Click(object sender, EventArgs e)
         {
-            swords.Add(new Sword("../../test_model/main.obj"));
+            swords.Add(new Sword("../../test_model/star.obj"));
             model.Items.Clear();
             for(int s = 0; s < swords.Count; s++)
             {
                 model.Items.Add("Клеймор_" + s.ToString());
             }
+
             model.SelectedIndex = sword;
             z_buffer_func();
             clear_picture();
@@ -231,11 +236,14 @@ namespace APGS
                             line((int)(camera.c1.X), (int)(camera.c1.Y), (int)(camera.c2.X), (int)(camera.c2.Y), picture, red);
                             line((int)(camera.c2.X), (int)(camera.c2.Y), (int)(camera.c3.X), (int)(camera.c3.Y), picture, red);
                             line((int)(camera.c1.X), (int)(camera.c1.Y), (int)(camera.c3.X), (int)(camera.c3.Y), picture, red);
+                            rendering = 0;
                         }
                         else
                         {
                             //закрашенная модель
                             triangle(camera.c1, camera.c2, camera.c3, picture, red);
+                            rendering = 1;
+                            picture.Save("kurva.png");
                         }
                     }
                 }
@@ -432,7 +440,45 @@ namespace APGS
         //сохранение сцены
         private void button2_Click(object sender, EventArgs e)
         {
-            //потом...
+            try
+            {
+                SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+                if (saveFileDialog1.ShowDialog() == DialogResult.Cancel)
+                    return;
+                string filename = saveFileDialog1.FileName;
+                save_scene(filename);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Ошибка сохранения файла!");
+            }
+        }
+
+        public void save_scene(string fileName)
+        {
+            FileStream aFile = new FileStream(fileName, FileMode.Create);
+            StreamWriter sw = new StreamWriter(aFile);
+            aFile.Seek(0, SeekOrigin.End);
+            sw.WriteLine("width " + render.Width);
+            sw.WriteLine("height " + render.Height);
+            sw.WriteLine("background " + render.BackColor);
+            sw.WriteLine("x_eye " + x_eye.Text);
+            sw.WriteLine("y_eye " + y_eye.Text);
+            sw.WriteLine("z_eye " + z_eye.Text);
+            sw.WriteLine("x_center " + x_center.Text);
+            sw.WriteLine("y_center " + y_center.Text);
+            sw.WriteLine("z_center " + z_center.Text);
+            sw.WriteLine("rendering " + rendering.ToString());
+            sw.WriteLine(" ");
+            for(int j = 0; j < swords.Count; j++)
+            {
+                for (int i = 0; i < swords[j].obj.VertexList.Count; i++)
+                    sw.WriteLine("v " + Convert.ToString(swords[j].obj.VertexList[i].X, CultureInfo.InvariantCulture) + " " + Convert.ToString(swords[j].obj.VertexList[i].Y, CultureInfo.InvariantCulture) + " " + Convert.ToString(swords[j].obj.VertexList[i].Z, CultureInfo.InvariantCulture));
+                sw.WriteLine(" ");
+                for (int i = 0; i < swords[j].obj.FaceList.Count; i++)
+                    sw.WriteLine("f " + swords[j].obj.FaceList[i].VertexIndexList[0] + " " + swords[j].obj.FaceList[i].VertexIndexList[1] + " " + swords[j].obj.FaceList[i].VertexIndexList[2] + " ");
+                sw.WriteLine(" ");
+            }
         }
 
         //удаление сцены
@@ -449,8 +495,82 @@ namespace APGS
         //Загрузка сцены
         private void button16_Click(object sender, EventArgs e)
         {
-            //завтра...
-            //дедлайн 14.06, я в ****...
+            OpenFileDialog OFD = new OpenFileDialog();
+            if (OFD.ShowDialog() == DialogResult.OK)
+            {
+                LoadString(File.ReadAllLines(OFD.FileName));
+                message(true, "Сцена загруженна");
+            }
+            else
+            {
+                message(false, "Отменено пользователем!");
+            }
+        }
+
+        public void LoadString(IEnumerable<string> data)
+        {
+            foreach (var line in data)
+            {
+                readLine(line);
+            }
+        }
+
+        public void readLine(string line)
+        {
+            string[] parts = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            int width = 0;
+            int height = 0;
+            int x_e = 0, y_e = 0, z_e = 0;
+            int x_c = 0, y_c = 0, z_c = 0;
+            int rend = 0;
+            System.Drawing.Color back_color = System.Drawing.Color.Red;
+            if (parts.Length > 0)
+            {
+                switch (parts[0])
+                {
+                    case "width":
+                        width = Convert.ToInt32(parts[1]);
+                        break;
+                    case "height":
+                        height = Convert.ToInt32(parts[1]);
+                        break;
+                    case "background":
+                        back_color = System.Drawing.Color.FromName(parts[1]);
+                        break;
+                    case "x_eye":
+                        x_e = Convert.ToInt32(parts[1]);
+                        break;
+                    case "y_eye":
+                        y_e = Convert.ToInt32(parts[1]);
+                        break;
+                    case "z_eye":
+                        z_e = Convert.ToInt32(parts[1]);
+                        break;
+                    case "x_center":
+                        x_c = Convert.ToInt32(parts[1]);
+                        break;
+                    case "y_center":
+                        y_c = Convert.ToInt32(parts[1]);
+                        break;
+                    case "z_center":
+                        z_c = Convert.ToInt32(parts[1]);
+                        break;
+                    case "rendering":
+                        rend = Convert.ToInt32(parts[1]);
+                        break;
+                    case "v":
+                        Vertex v = new Vertex();
+                        v.LoadFromStringArray(parts);
+                        swords[swords.Count - 1].obj.VertexList.Add(v);
+                        break;
+                    case "f":
+                        Face f = new Face();
+                        f.LoadFromStringArray(parts);
+                        swords[swords.Count - 1].obj.FaceList.Add(f);
+                        break;
+                }
+                scene_managment(width, height, back_color);
+            }
         }
 
         private void radio_center_Click(object sender, EventArgs e)
@@ -677,7 +797,7 @@ namespace APGS
             swords.RemoveAt(sword);
             for (int i = 0; i < swords.Count; i++)
             {
-                model.Items.Add("object " + i.ToString());
+                model.Items.Add("Клеймор_" + i.ToString());
             }
             if (model.Items.Count != 0)
             {
@@ -771,7 +891,8 @@ namespace APGS
 
         private void button23_Click(object sender, EventArgs e)
         {
-
+            camera.MoveCameraX(camera.Center - camera.Eye, true);
+            create_model();
         }
 
         private void model_SelectedIndexChanged(object sender, EventArgs e)
@@ -818,6 +939,30 @@ namespace APGS
         private void button24_Click(object sender, EventArgs e)
         {
             camera.MoveCameraX(camera.Center - camera.Eye, false);
+            create_model();
+        }
+
+        private void button22_Click(object sender, EventArgs e)
+        {
+            camera.MoveCameraY(camera.Center - camera.Eye, true);
+            create_model();
+        }
+
+        private void button21_Click(object sender, EventArgs e)
+        {
+            camera.MoveCameraY(camera.Center - camera.Eye, false);
+            create_model();
+        }
+
+        private void button20_Click(object sender, EventArgs e)
+        {
+            camera.MoveCameraZ(camera.Center - camera.Eye, false);
+            create_model();
+        }
+
+        private void button19_Click(object sender, EventArgs e)
+        {
+            camera.MoveCameraZ(camera.Center - camera.Eye, true);
             create_model();
         }
     }
