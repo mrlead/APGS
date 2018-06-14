@@ -97,9 +97,10 @@ namespace APGS
             for (int s = 0; s < swords.Count; s++)
             {
                 model.Items.Add("Object_" + s.ToString());
-                swords[s].name = name_sword.Text + s.ToString();
-            }
+                swords[s].name = "Object_" + s.ToString();
+        }
             model.SelectedIndex = sword;
+            model.Refresh();
             z_buffer_func();
             clear_picture();
             create_model();
@@ -255,7 +256,6 @@ namespace APGS
                             //закрашенная модель
                             triangle(camera.c1, camera.c2, camera.c3, picture, red);
                             rendering = 1;
-                            picture.Save("kurva.png");
                         }
                     }
                 }
@@ -515,6 +515,7 @@ namespace APGS
             {
                 LoadString(File.ReadAllLines(OFD.FileName));
                 scene_managment(width, height, System.Drawing.Color.FromArgb(b_r, b_g, b_b));
+                Rend();
                 message(true, "Сцена загруженна");
             }
             else
